@@ -34,7 +34,7 @@ const SessionCard = () => (
 
 const SessionCardBoard = () => (
   <SimpleGrid
-    spacing={4}
+    spacing={10}
     templateColumns="repeat(auto-fill, minmax(400px, 2fr))"
     padding="30px"
     justifyItems="center" // Center items horizontally

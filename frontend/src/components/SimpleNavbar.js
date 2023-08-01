@@ -29,6 +29,7 @@ const NavLink = (props) => {
       as="a"
       px={2}
       py={1}
+      fontSize="xl"
       rounded={"md"}
       _hover={{
         textDecoration: "none",
@@ -46,7 +47,7 @@ export default function SimpleNavbar() {
 
   return (
     <>
-      <Box bg={"#A2EAC3"} px={4}>
+      <Box bg={"#A2EAC3"} px={8}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -55,11 +56,13 @@ export default function SimpleNavbar() {
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={"center"}>
-            <Box>Yogine</Box>
+          <HStack spacing={20} alignItems={"center"}>
+            <Box fontFamily="stylizedCursive" fontSize="4xl">
+              Yogine
+            </Box>
             <HStack
               as={"nav"}
-              spacing={4}
+              spacing={20}
               display={{ base: "none", md: "flex" }}
             >
               {Links.map((link) => (
@@ -77,7 +80,7 @@ export default function SimpleNavbar() {
                 minW={0}
               >
                 <Avatar
-                  size={"sm"}
+                  size={"md"}
                   src={
                     "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
                   }
