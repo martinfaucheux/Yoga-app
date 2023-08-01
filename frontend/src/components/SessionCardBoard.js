@@ -33,22 +33,34 @@ const SessionCard = () => (
 );
 
 const SessionCardBoard = () => (
-  <SimpleGrid
-    spacing={10}
-    templateColumns="repeat(auto-fill, minmax(400px, 2fr))"
-    padding="30px"
-    justifyItems="center" // Center items horizontally
-  >
-    <SessionCard />
-    <SessionCard />
-    <SessionCard />
-    <SessionCard />
-    <SessionCard />
-    <SessionCard />
-    <SessionCard />
-    <SessionCard />
-    <SessionCard />
-  </SimpleGrid>
+  <>
+    <SimpleGrid
+      spacing={10}
+      templateColumns="repeat(auto-fill, minmax(400px, 2fr))"
+      padding="30px"
+      justifyItems="center" // Center items horizontally
+    >
+      <SessionCard />
+      <SessionCard />
+      <SessionCard />
+      <SessionCard />
+      <SessionCard />
+      <SessionCard />
+      <SessionCard />
+      <SessionCard />
+      <SessionCard />
+    </SimpleGrid>
+    <Image
+      src="https://images.unsplash.com/photo-1617173945092-1c6622e5b651?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80"
+      alt="Unsplash Image"
+      position="fixed"
+      bottom="0"
+      right="0"
+      opacity="0.5"
+      zIndex="-1"
+      width="28%"
+    />
+  </>
 );
 
 export default SessionCardBoard;
