@@ -37,6 +37,7 @@ const SessionCardBoard = () => (
     spacing={4}
     templateColumns="repeat(auto-fill, minmax(400px, 2fr))"
     padding="30px"
+    justifyItems="center" // Center items horizontally
   >
     <SessionCard />
     <SessionCard />
