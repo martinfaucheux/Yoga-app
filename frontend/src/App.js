@@ -1,11 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Heading } from "@chakra-ui/react";
 import SessionCardBoard from "./components/SessionCardBoard";
+import SimpleNavbar from "./components/SimpleNavbar";
 
 function App() {
   return (
     <ChakraProvider>
+      <SimpleNavbar />
+      {/* <Heading>Here are some sessions that could interest you</Heading> */}
       <SessionCardBoard />
     </ChakraProvider>
   );
