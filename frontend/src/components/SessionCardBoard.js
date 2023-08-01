@@ -6,6 +6,7 @@ import {
   CardFooter,
   Divider,
   SimpleGrid,
+  Box,
   Heading,
   Image,
   Stack,
@@ -13,22 +14,34 @@ import {
 } from "@chakra-ui/react";
 
 const SessionCard = () => (
-  <Card maxW="sm" background="#A2EAC3">
-    <CardBody>
+  <Card maxW="md">
+    <Box>
       <Image
         src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1220&q=80"
         alt="Woman doing yoga"
         borderRadius="lg"
+        objectPosition="center -30px" // Adjust this value to reposition the image
       />
-      <Stack mt="6" spacing="2">
-        <Heading size="md">Yoga by the lake</Heading>
-        <Text>
-          Flow with the serenity of Annecy lake in a rejuvenating Vinyasa yoga
-          class, harmonizing breath and movement amidst breathtaking natural
-          beauty.
-        </Text>
-      </Stack>
-    </CardBody>
+      <CardBody>
+        <Box
+          position="absolute"
+          bottom="0"
+          left="0"
+          width="100%"
+          background="white"
+          p="4"
+          borderBottomRadius="lg"
+          // background="#A2EAC3"
+        >
+          <Heading size="md">Yoga by the lake</Heading>
+          <Text>
+            Flow with the serenity of Annecy lake in a rejuvenating Vinyasa yoga
+            class, harmonizing breath and movement amidst breathtaking natural
+            beauty.
+          </Text>
+        </Box>
+      </CardBody>
+    </Box>
   </Card>
 );
 
