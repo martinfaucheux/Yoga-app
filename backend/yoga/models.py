@@ -3,6 +3,7 @@ from django.db import models
 
 class Session(models.Model):
     name = models.CharField(max_length=120)
+    description = models.TextField(blank=True, default="")
     yoga_type = models.CharField(max_length=120)
     duration = models.PositiveIntegerField()
     start_at = models.DateTimeField()

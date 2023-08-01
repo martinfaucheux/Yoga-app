@@ -6,4 +6,4 @@ from .models import Session
 class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Session
-        fields = ["id", "name", "yoga_type", "start_at"]
+        fields = ["id", "name", "description", "yoga_type", "start_at"]
