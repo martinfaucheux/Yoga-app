@@ -28,10 +28,10 @@ const SessionCard = () => (
           bottom="0"
           left="0"
           width="100%"
-          background="white"
           p="4"
           borderBottomRadius="lg"
-          // background="#A2EAC3"
+          // background="white"
+          backgroundImage="linear-gradient(transparent 5%, white 10%)"
         >
           <Heading size="md">Yoga by the lake</Heading>
           <Text>
