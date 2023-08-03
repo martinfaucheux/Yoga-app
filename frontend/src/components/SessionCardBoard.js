@@ -15,7 +15,10 @@ import {
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const SessionCard = ({ name, description }) => {
+const SessionCard = ({ name, description, picture_url }) => {
+  picture_url = picture_url
+    ? picture_url
+    : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1220&q=80";
   return (
     <Card
       maxW="md"
@@ -24,7 +27,7 @@ const SessionCard = ({ name, description }) => {
     >
       <Box>
         <Image
-          src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1220&q=80"
+          src={picture_url}
           alt="Woman doing yoga"
           borderRadius="lg"
           objectPosition="center -30px" // Adjust this value to reposition the image
@@ -79,6 +82,7 @@ const SessionCardBoard = () => {
             key={session.id}
             name={session.name}
             description={session.description}
+            picture_url={session.picture_url}
           />
         ))}
       </SimpleGrid>
