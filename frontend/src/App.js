@@ -1,8 +1,16 @@
 import "./App.css";
-import { ChakraProvider, extendTheme, Heading, Text } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import SessionCardBoard from "./components/SessionCardBoard";
 import SimpleNavbar from "./components/SimpleNavbar";
-import { BrowserRouter, Routes, Navigate, Route } from "react-router-dom";
+import SessionDetailPage from "./components/SessionDetailPage";
+import BlogPage from "./components/BlogPage";
+import AboutPage from "./components/AboutPage";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Navigate,
+  Route,
+} from "react-router-dom";
 
 // Create a custom theme and set the font family
 const theme = extendTheme({
@@ -14,39 +22,20 @@ const theme = extendTheme({
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
+      <Router>
         <SimpleNavbar />
         <MainContent />
-      </BrowserRouter>
+      </Router>
     </ChakraProvider>
   );
 }
-
-const BlogPage = () => {
-  return (
-    <div>
-      <Heading>Blogs</Heading>
-      <Text>This is where blog posts will appear.</Text>
-    </div>
-  );
-};
-
-const AboutPage = () => {
-  return (
-    <div>
-      <Heading>About</Heading>
-      <Text>
-        My name is Céline and I am the best Yoga teacher in the world!
-      </Text>
-    </div>
-  );
-};
 
 const MainContent = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="sessions/" />} />
       <Route path="/sessions" element={<SessionCardBoard />} />
+      <Route path="/sessions/:sessionId" element={<SessionDetailPage />} />
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/about" element={<AboutPage />} />
     </Routes>
