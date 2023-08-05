@@ -5,6 +5,7 @@ import SimpleNavbar from "./components/SimpleNavbar";
 import SessionDetailPage from "./components/SessionDetailPage";
 import BlogPage from "./components/BlogPage";
 import AboutPage from "./components/AboutPage";
+import CornerPicture from "./components/CornerPicture";
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,6 +26,7 @@ function App() {
       <Router>
         <SimpleNavbar />
         <MainContent />
+        <CornerPicture />
       </Router>
     </ChakraProvider>
   );
