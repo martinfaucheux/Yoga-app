@@ -61,16 +61,15 @@ const SessionCard = ({ id, name, description, picture_url, duration }) => {
 const SessionCardBoard = () => {
   const [sessionList, setSessionList] = useState([]);
 
-  const fetchUserData = () => {
+  const fetchSessionData = () => {
     axios
       .get("/api/sessions/")
       .then((res) => setSessionList(res.data))
       .catch((err) => console.log(err));
   };
 
-  // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    fetchUserData();
+    fetchSessionData();
   }, []);
 
   console.log(sessionList);
