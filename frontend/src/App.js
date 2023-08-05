@@ -1,8 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, Heading, Text } from "@chakra-ui/react";
 import SessionCardBoard from "./components/SessionCardBoard";
 import SimpleNavbar from "./components/SimpleNavbar";
+import { BrowserRouter, Routes, Navigate, Route } from "react-router-dom";
 
 // Create a custom theme and set the font family
 const theme = extendTheme({
@@ -14,30 +14,42 @@ const theme = extendTheme({
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <SimpleNavbar />
-      <SessionCardBoard />
+      <BrowserRouter>
+        <SimpleNavbar />
+        <MainContent />
+      </BrowserRouter>
     </ChakraProvider>
   );
 }
 
-const DefaultReactIndexPage = () => {
+const BlogPage = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Heading>Blogs</Heading>
+      <Text>This is where blog posts will appear.</Text>
     </div>
+  );
+};
+
+const AboutPage = () => {
+  return (
+    <div>
+      <Heading>About</Heading>
+      <Text>
+        My name is Céline and I am the best Yoga teacher in the world!
+      </Text>
+    </div>
+  );
+};
+
+const MainContent = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="sessions/" />} />
+      <Route path="/sessions" element={<SessionCardBoard />} />
+      <Route path="/blog" element={<BlogPage />} />
+      <Route path="/about" element={<AboutPage />} />
+    </Routes>
   );
 };
 

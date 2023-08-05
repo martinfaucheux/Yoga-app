@@ -18,15 +18,20 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
-const Links = ["Book", "Blog", "About"];
+const Links = [
+  { name: "Book", to: "/sessions" },
+  { name: "Blog", to: "/blog" },
+  { name: "About", to: "/about" },
+];
 
 const NavLink = (props) => {
-  const { children } = props;
+  const { children, to } = props;
 
   return (
     <Box
-      as="a"
+      as={Link}
       px={2}
       py={1}
       fontSize="xl"
@@ -35,7 +40,7 @@ const NavLink = (props) => {
         textDecoration: "none",
         bg: "#6DB990",
       }}
-      href={"#"}
+      to={to}
     >
       {children}
     </Box>
@@ -66,7 +71,9 @@ export default function SimpleNavbar() {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} to={link.to}>
+                  {link.name}
+                </NavLink>
               ))}
             </HStack>
           </HStack>
@@ -95,16 +102,6 @@ export default function SimpleNavbar() {
             </Menu>
           </Flex>
         </Flex>
-
-        {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
       </Box>
     </>
   );
