@@ -1,13 +1,14 @@
 import { Heading, Text } from "@chakra-ui/react";
+import PageContainer from "./PageContainer";
 
 const AboutPage = () => {
   return (
-    <div>
+    <PageContainer>
       <Heading>About</Heading>
-      <Text>
+      <Text mt={2}>
         My name is Céline and I am the best Yoga teacher in the world!
       </Text>
-    </div>
+    </PageContainer>
   );
 };
 export default AboutPage;

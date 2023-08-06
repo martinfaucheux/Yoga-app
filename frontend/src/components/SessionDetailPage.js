@@ -2,6 +2,7 @@ import { Heading, Text, Box, Image, Button } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import PageContainer from "./PageContainer";
 
 const SessionDetailPage = () => {
   const { sessionId } = useParams();
@@ -18,8 +19,8 @@ const SessionDetailPage = () => {
     fetchSessionData();
   }, []);
 
-  return session ? (
-    <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
+  const detailPage = () => (
+    <>
       <Image
         src={session.picture_url}
         alt={session.name}
@@ -40,10 +41,11 @@ const SessionDetailPage = () => {
           Book
         </Button>
       </Box>
-    </Box>
-  ) : (
-    <Text align={"center"}>Not Found</Text>
+    </>
   );
+
+  const notFound = () => <Text align={"center"}>Not Found</Text>;
+  return <PageContainer>{session ? detailPage() : notFound()}</PageContainer>;
 };
 
 export default SessionDetailPage;

@@ -1,11 +1,12 @@
 import { Heading, Text } from "@chakra-ui/react";
+import PageContainer from "./PageContainer";
 
 const BlogPage = () => {
   return (
-    <div>
+    <PageContainer>
       <Heading>Blogs</Heading>
-      <Text>This is where blog posts will appear.</Text>
-    </div>
+      <Text mt={2}>This is where blog posts will appear.</Text>
+    </PageContainer>
   );
 };
 export default BlogPage;
