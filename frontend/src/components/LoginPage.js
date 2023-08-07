@@ -24,6 +24,12 @@ const LoginPage = () => {
     }
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
     <Center>
       <Stack maxW={"600px"} spacing={3} padding="40px">
@@ -41,6 +47,7 @@ const LoginPage = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
         </FormControl>
         <Button

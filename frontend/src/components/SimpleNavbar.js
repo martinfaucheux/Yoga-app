@@ -18,7 +18,8 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthService from "../utils/AuthService";
 
 const Links = [
   { name: "Book", to: "/sessions" },
@@ -49,6 +50,12 @@ const NavLink = (props) => {
 
 export default function SimpleNavbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
+  const logoutAndRedirect = () => {
+    AuthService.logout();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -97,7 +104,7 @@ export default function SimpleNavbar() {
                 <MenuItem>Link 1</MenuItem>
                 <MenuItem>Link 2</MenuItem>
                 <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
+                <MenuItem onClick={logoutAndRedirect}>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
