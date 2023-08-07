@@ -72,8 +72,6 @@ const SessionCardBoard = () => {
     fetchSessionData();
   }, []);
 
-  console.log(sessionList);
-
   return (
     <>
       <SimpleGrid

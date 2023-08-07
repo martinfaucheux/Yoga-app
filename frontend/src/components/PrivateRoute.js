@@ -4,19 +4,17 @@
 // If they are: they proceed to the page
 // If not: they are redirected to the login page.
 import React from "react";
-import AuthService from "../utils/AuthService";
+import { useAuth } from "../utils/AuthService";
 import { Navigate, Outlet } from "react-router-dom";
 
 const LOGIN_ROUTE = "/login";
 
 const PrivateRoute = () => {
+  const { isAuthenticated, login, logout } = useAuth();
+
   // If authorized, return an outlet that will render child elements
   // If not, return element that will navigate to login page
-  return AuthService.isAuthenticated() ? (
-    <Outlet />
-  ) : (
-    <Navigate to={LOGIN_ROUTE} />
-  );
+  return isAuthenticated ? <Outlet /> : <Navigate to={LOGIN_ROUTE} />;
 };
 
 export default PrivateRoute;

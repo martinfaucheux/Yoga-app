@@ -1,4 +1,5 @@
 import axios from "axios";
+import { createContext, useContext, useState } from "react";
 
 const TOKEN_KEY = "jwtToken";
 
@@ -7,6 +8,12 @@ const token = localStorage.getItem(TOKEN_KEY);
 if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
+
+const AuthContext = createContext();
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 const setAuthToken = (token) => {
   if (token) {
@@ -37,4 +44,25 @@ const AuthService = {
   },
 };
 
-export default AuthService;
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    AuthService.isAuthenticated()
+  );
+
+  const login = async (email, password) => {
+    const response = await AuthService.login(email, password);
+    setIsAuthenticated(true);
+    return response;
+  };
+
+  const logout = () => {
+    AuthService.logout();
+    setIsAuthenticated(false);
+  };
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

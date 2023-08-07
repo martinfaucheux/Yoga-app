@@ -7,17 +7,18 @@ import {
   Center,
   Stack,
 } from "@chakra-ui/react";
-import AuthService from "../utils/AuthService";
+import { useAuth } from "../utils/AuthService";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { isAuthenticated, login, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const response = await AuthService.login(email, password);
+      const response = await login(email, password);
       return navigate("/sessions");
     } catch (error) {
       console.error("Login failed:", error);

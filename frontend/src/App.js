@@ -8,6 +8,7 @@ import AboutPage from "./components/AboutPage";
 import LoginPage from "./components/LoginPage";
 import CornerPicture from "./components/CornerPicture";
 import PrivateRoute from "./components/PrivateRoute";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -42,13 +43,12 @@ const MainContent = () => {
 
       <Route exact path="/sessions" element={<PrivateRoute />}>
         <Route exact path="/sessions" element={<SessionCardBoard />} />
+        <Route path="/sessions" element={<SessionCardBoard />} />
+        <Route path="/sessions/:sessionId" element={<SessionDetailPage />} />
       </Route>
 
-      {/* <Route path="/sessions" element={<SessionCardBoard />} />
-      <Route path="/sessions/:sessionId" element={<SessionDetailPage />} /> */}
-
-      {/* <Route path="/blog" element={<BlogPage />} />
-      <Route path="/about" element={<AboutPage />} /> */}
+      <Route path="/blog" element={<BlogPage />} />
+      <Route path="/about" element={<AboutPage />} />
     </Routes>
   );
 };

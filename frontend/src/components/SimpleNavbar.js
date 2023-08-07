@@ -5,7 +5,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  Text,
   IconButton,
   Button,
   Menu,
@@ -14,12 +13,11 @@ import {
   MenuItem,
   MenuDivider,
   useDisclosure,
-  useColorModeValue,
-  Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
-import AuthService from "../utils/AuthService";
+import { useAuth } from "../utils/AuthService";
+import { useEffect, useState } from "react";
 
 const Links = [
   { name: "Book", to: "/sessions" },
@@ -48,14 +46,24 @@ const NavLink = (props) => {
   );
 };
 
-export default function SimpleNavbar() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const LogInOut = () => {
+  const { isAuthenticated, login, logout } = useAuth();
   const navigate = useNavigate();
 
   const logoutAndRedirect = () => {
-    AuthService.logout();
+    logout();
     navigate("/login");
   };
+
+  return isAuthenticated ? (
+    <MenuItem onClick={logoutAndRedirect}>Logout</MenuItem>
+  ) : (
+    <MenuItem onClick={() => navigate("/login")}>Login</MenuItem>
+  );
+};
+
+export default function SimpleNavbar() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -104,7 +112,7 @@ export default function SimpleNavbar() {
                 <MenuItem>Link 1</MenuItem>
                 <MenuItem>Link 2</MenuItem>
                 <MenuDivider />
-                <MenuItem onClick={logoutAndRedirect}>Logout</MenuItem>
+                <LogInOut />
               </MenuList>
             </Menu>
           </Flex>
