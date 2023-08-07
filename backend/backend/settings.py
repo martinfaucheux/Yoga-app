@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # imported apps
     "corsheaders",
     "rest_framework",
+    "rest_framework_simplejwt",
     # custom apps
     "yoga",
     "user",
@@ -86,6 +87,13 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+}
 
 AUTH_USER_MODEL = "user.User"
 
