@@ -5,6 +5,7 @@ import SimpleNavbar from "./components/SimpleNavbar";
 import SessionDetailPage from "./components/SessionDetailPage";
 import BlogPage from "./components/BlogPage";
 import AboutPage from "./components/AboutPage";
+import LoginPage from "./components/LoginPage";
 import CornerPicture from "./components/CornerPicture";
 import {
   BrowserRouter as Router,
@@ -36,6 +37,7 @@ const MainContent = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="sessions/" />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/sessions" element={<SessionCardBoard />} />
       <Route path="/sessions/:sessionId" element={<SessionDetailPage />} />
       <Route path="/blog" element={<BlogPage />} />
