@@ -7,6 +7,7 @@ import BlogPage from "./components/BlogPage";
 import AboutPage from "./components/AboutPage";
 import LoginPage from "./components/LoginPage";
 import CornerPicture from "./components/CornerPicture";
+import PrivateRoute from "./components/PrivateRoute";
 import {
   BrowserRouter as Router,
   Routes,
@@ -38,10 +39,16 @@ const MainContent = () => {
     <Routes>
       <Route path="/" element={<Navigate to="sessions/" />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/sessions" element={<SessionCardBoard />} />
-      <Route path="/sessions/:sessionId" element={<SessionDetailPage />} />
-      <Route path="/blog" element={<BlogPage />} />
-      <Route path="/about" element={<AboutPage />} />
+
+      <Route exact path="/sessions" element={<PrivateRoute />}>
+        <Route exact path="/sessions" element={<SessionCardBoard />} />
+      </Route>
+
+      {/* <Route path="/sessions" element={<SessionCardBoard />} />
+      <Route path="/sessions/:sessionId" element={<SessionDetailPage />} /> */}
+
+      {/* <Route path="/blog" element={<BlogPage />} />
+      <Route path="/about" element={<AboutPage />} /> */}
     </Routes>
   );
 };
