@@ -7,28 +7,18 @@ import {
   Center,
   Stack,
 } from "@chakra-ui/react";
-import axios from "axios";
+import AuthService from "../utils/AuthService";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("/api/token/", {
-        email,
-        password,
-      });
-
-      const { access, refresh } = response.data;
-
-      setAccessToken(access);
-      localStorage.setItem("jwtToken", access);
-      setRefreshToken(refresh);
-
-      // You can also store the tokens in local storage or a global state management solution like Redux
+      const response = await AuthService.login(email, password);
+      return navigate("/sessions");
     } catch (error) {
       console.error("Login failed:", error);
     }
