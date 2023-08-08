@@ -6,6 +6,7 @@ import {
   FormLabel,
   Center,
   Stack,
+  Box,
 } from "@chakra-ui/react";
 import { useAuth } from "../utils/AuthService";
 import { useNavigate } from "react-router-dom";
@@ -33,32 +34,34 @@ const LoginPage = () => {
 
   return (
     <Center>
-      <Stack maxW={"600px"} spacing={3} padding="40px">
-        <FormControl id="email">
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormControl>
-        <FormControl id="password">
-          <FormLabel>Password</FormLabel>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
-        </FormControl>
-        <Button
-          onClick={handleLogin}
-          background="#A2EAC3"
-          _hover={{ bg: "#6DB990" }}
-        >
-          Login
-        </Button>
-      </Stack>
+      <Box boxShadow={"lg"} mt={100} borderRadius={"xl"}>
+        <Stack maxW={"600px"} spacing={3} padding="40px">
+          <FormControl id="email">
+            <FormLabel>Email</FormLabel>
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
+          </FormControl>
+          <Button
+            onClick={handleLogin}
+            background="#A2EAC3"
+            _hover={{ bg: "#6DB990" }}
+          >
+            Login
+          </Button>
+        </Stack>
+      </Box>
     </Center>
   );
 };
