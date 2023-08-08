@@ -5,6 +5,8 @@ import {
   Input,
   Button,
   FormErrorMessage,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import BaseFormBox from "./BaseFormBox";
 import { customFetch } from "../utils/customFetch";
@@ -19,7 +21,24 @@ function RegistrationForm() {
     confirmPassword: "",
   });
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+  const [signUpError, setSignUpError] = useState(false);
   const navigate = useNavigate();
+
+  const isFirstNameInvalid = formData.firstName === "";
+  const isLastNameInvalid = formData.lastName === "";
+  const isEmailInvalid = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+
+  const isPasswordInvalid = formData.password === "";
+  const isConfirmPasswordInvalid =
+    formData.confirmPassword === "" &&
+    formData.password != formData.confirmPassword;
+
+  const disableButton =
+    isFirstNameInvalid ||
+    isLastNameInvalid ||
+    isEmailInvalid ||
+    isPasswordInvalid ||
+    isConfirmPasswordInvalid;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,6 +50,10 @@ function RegistrationForm() {
 
   const handleSubmit = async () => {
     setAlreadySubmitted(true);
+    if (disableButton) {
+      return;
+    }
+
     const postData = {
       email: formData.email,
       password: formData.password,
@@ -39,9 +62,10 @@ function RegistrationForm() {
     };
     try {
       await customFetch.post("/api/users/", postData);
+      setSignUpError(false);
       navigate("/login", { state: { successfulSignUp: true } });
     } catch (error) {
-      console.error("Signup failed:", error);
+      setSignUpError(true);
     }
     console.log(formData);
   };
@@ -54,7 +78,7 @@ function RegistrationForm() {
 
   return (
     <BaseFormBox>
-      <FormControl isInvalid={alreadySubmitted && formData.firstName === ""}>
+      <FormControl isInvalid={alreadySubmitted && isFirstNameInvalid}>
         <FormLabel>First Name</FormLabel>
         <Input
           type="text"
@@ -64,7 +88,7 @@ function RegistrationForm() {
         />
         <FormErrorMessage>{"First name is required"}</FormErrorMessage>
       </FormControl>
-      <FormControl isInvalid={alreadySubmitted && formData.lastName === ""}>
+      <FormControl isInvalid={alreadySubmitted && isLastNameInvalid}>
         <FormLabel>Last Name</FormLabel>
         <Input
           type="text"
@@ -74,7 +98,7 @@ function RegistrationForm() {
         />
         <FormErrorMessage>{"Last name is required"}</FormErrorMessage>
       </FormControl>
-      <FormControl isInvalid={alreadySubmitted && formData.email === ""}>
+      <FormControl isInvalid={alreadySubmitted && isEmailInvalid}>
         <FormLabel>Email</FormLabel>
         <Input
           type="email"
@@ -82,9 +106,9 @@ function RegistrationForm() {
           value={formData.email}
           onChange={handleChange}
         />
-        <FormErrorMessage>{"Email is required"}</FormErrorMessage>
+        <FormErrorMessage>{"This is not a valid email"}</FormErrorMessage>
       </FormControl>
-      <FormControl isInvalid={alreadySubmitted && formData.password === ""}>
+      <FormControl isInvalid={alreadySubmitted && isPasswordInvalid}>
         <FormLabel>Password</FormLabel>
         <Input
           type="password"
@@ -94,11 +118,7 @@ function RegistrationForm() {
         />
         <FormErrorMessage>{"Password is required"}</FormErrorMessage>
       </FormControl>
-      <FormControl
-        isInvalid={
-          alreadySubmitted && formData.password != formData.confirmPassword
-        }
-      >
+      <FormControl isInvalid={alreadySubmitted && isConfirmPasswordInvalid}>
         <FormLabel>Confirm Password</FormLabel>
         <Input
           type="password"
@@ -116,6 +136,12 @@ function RegistrationForm() {
       >
         Sign up
       </Button>
+      {signUpError ? (
+        <Alert status="error" borderRadius={"md"}>
+          <AlertIcon />
+          An unexpected error occurred while signing in...
+        </Alert>
+      ) : null}
     </BaseFormBox>
   );
 }
