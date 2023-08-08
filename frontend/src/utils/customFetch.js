@@ -13,7 +13,7 @@ customFetch.interceptors.request.use(
   async (config) => {
     const token = AuthService.getLocalToken();
     if (token) {
-      config.headers["Authorization"] = ` bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
@@ -22,12 +22,24 @@ customFetch.interceptors.request.use(
   }
 );
 
-const refreshToken = async () => {
-  try {
-    const resp = await customFetch.get("auth/refresh");
-    console.log("refresh token", resp.data);
-    return resp.data;
-  } catch (e) {
-    console.log("Error", e);
+customFetch.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async function (error) {
+    const originalRequest = error.config;
+    if (error.response.status === 403 && !originalRequest._retry) {
+      // TODO: Add more condition to check that it's about refresh token
+      originalRequest._retry = true;
+
+      const resp = await AuthService.refreshToken();
+      // const accessToken = resp.response.access;
+
+      // customFetch.defaults.headers.common[
+      //   "Authorization"
+      // ] = `Bearer ${accessToken}`;
+      return customFetch(originalRequest);
+    }
+    return Promise.reject(error);
   }
-};
+);
