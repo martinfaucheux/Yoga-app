@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { customFetch } from "../utils/customFetch";
 import { TimeIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -62,7 +62,7 @@ const SessionCardBoard = () => {
   const [sessionList, setSessionList] = useState([]);
 
   const fetchSessionData = () => {
-    axios
+    customFetch
       .get("/api/sessions/")
       .then((res) => setSessionList(res.data))
       .catch((err) => console.log(err));

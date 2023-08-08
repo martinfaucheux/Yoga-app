@@ -1,6 +1,6 @@
 import { Heading, Text, Box, Image, Button } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { customFetch } from "../utils/customFetch";
 import React, { useState, useEffect } from "react";
 import PageContainer from "./PageContainer";
 
@@ -9,7 +9,7 @@ const SessionDetailPage = () => {
   const [session, setSession] = useState({});
 
   const fetchSessionData = () => {
-    axios
+    customFetch
       .get(`/api/sessions/${sessionId}`)
       .then((res) => setSession(res.data))
       .catch((err) => console.log(err));
