@@ -39,18 +39,10 @@ function RegistrationForm() {
     };
     try {
       await customFetch.post("/api/users/", postData);
-      navigate("/login");
+      navigate("/login", { state: { successfulSignUp: true } });
     } catch (error) {
       console.error("Signup failed:", error);
     }
-    // Here, you can make the POST request to your server using the formData
-    // axios.post('/api/users', formData)
-    //   .then(response => {
-    //     // Handle success
-    //   })
-    //   .catch(error => {
-    //     // Handle error
-    //   });
     console.log(formData);
   };
 

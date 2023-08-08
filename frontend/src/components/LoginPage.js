@@ -4,12 +4,11 @@ import {
   Input,
   FormControl,
   FormLabel,
-  Center,
-  Stack,
-  Box,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useAuth } from "../utils/AuthService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import BaseFormBox from "./BaseFormBox";
 
 const LoginPage = () => {
@@ -17,6 +16,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = async () => {
     try {
@@ -33,8 +33,18 @@ const LoginPage = () => {
     }
   };
 
+  const successfulSignUp = () => (
+    <Alert status="success" borderRadius={"md"} colorScheme={"blue"}>
+      <AlertIcon />
+      Account created successfully! You can now log in.
+    </Alert>
+  );
+
   return (
     <BaseFormBox>
+      {location.state && location.state.successfulSignUp
+        ? successfulSignUp()
+        : null}
       <FormControl id="email">
         <FormLabel>Email</FormLabel>
         <Input
