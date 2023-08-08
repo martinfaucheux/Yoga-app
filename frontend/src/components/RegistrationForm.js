@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  FormErrorMessage,
+} from "@chakra-ui/react";
 import BaseFormBox from "./BaseFormBox";
 import { customFetch } from "../utils/customFetch";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +18,7 @@ function RegistrationForm() {
     password: "",
     confirmPassword: "",
   });
+  const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -23,6 +30,7 @@ function RegistrationForm() {
   };
 
   const handleSubmit = async () => {
+    setAlreadySubmitted(true);
     const postData = {
       email: formData.email,
       password: formData.password,
@@ -54,7 +62,7 @@ function RegistrationForm() {
 
   return (
     <BaseFormBox>
-      <FormControl>
+      <FormControl isInvalid={alreadySubmitted && formData.firstName === ""}>
         <FormLabel>First Name</FormLabel>
         <Input
           type="text"
@@ -62,8 +70,9 @@ function RegistrationForm() {
           value={formData.firstName}
           onChange={handleChange}
         />
+        <FormErrorMessage>{"First name is required"}</FormErrorMessage>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={alreadySubmitted && formData.lastName === ""}>
         <FormLabel>Last Name</FormLabel>
         <Input
           type="text"
@@ -71,8 +80,9 @@ function RegistrationForm() {
           value={formData.lastName}
           onChange={handleChange}
         />
+        <FormErrorMessage>{"Last name is required"}</FormErrorMessage>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={alreadySubmitted && formData.email === ""}>
         <FormLabel>Email</FormLabel>
         <Input
           type="email"
@@ -80,8 +90,9 @@ function RegistrationForm() {
           value={formData.email}
           onChange={handleChange}
         />
+        <FormErrorMessage>{"Email is required"}</FormErrorMessage>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={alreadySubmitted && formData.password === ""}>
         <FormLabel>Password</FormLabel>
         <Input
           type="password"
@@ -89,8 +100,13 @@ function RegistrationForm() {
           value={formData.password}
           onChange={handleChange}
         />
+        <FormErrorMessage>{"Password is required"}</FormErrorMessage>
       </FormControl>
-      <FormControl>
+      <FormControl
+        isInvalid={
+          alreadySubmitted && formData.password != formData.confirmPassword
+        }
+      >
         <FormLabel>Confirm Password</FormLabel>
         <Input
           type="password"
@@ -99,6 +115,7 @@ function RegistrationForm() {
           onChange={handleChange}
           onKeyDown={handleKeyPress}
         />
+        <FormErrorMessage>{"Both passwords must match"}</FormErrorMessage>
       </FormControl>
       <Button
         onClick={handleSubmit}
