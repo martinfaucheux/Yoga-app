@@ -10,11 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { useAuth } from "../utils/AuthService";
 import { useNavigate } from "react-router-dom";
+import BaseFormBox from "./BaseFormBox";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isAuthenticated, login, logout } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -33,36 +34,32 @@ const LoginPage = () => {
   };
 
   return (
-    <Center>
-      <Box boxShadow={"lg"} mt={100} borderRadius={"xl"}>
-        <Stack maxW={"600px"} spacing={3} padding="40px">
-          <FormControl id="email">
-            <FormLabel>Email</FormLabel>
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </FormControl>
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={handleKeyPress}
-            />
-          </FormControl>
-          <Button
-            onClick={handleLogin}
-            background="#A2EAC3"
-            _hover={{ bg: "#6DB990" }}
-          >
-            Login
-          </Button>
-        </Stack>
-      </Box>
-    </Center>
+    <BaseFormBox>
+      <FormControl id="email">
+        <FormLabel>Email</FormLabel>
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </FormControl>
+      <FormControl id="password">
+        <FormLabel>Password</FormLabel>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyPress}
+        />
+      </FormControl>
+      <Button
+        onClick={handleLogin}
+        background="#A2EAC3"
+        _hover={{ bg: "#6DB990" }}
+      >
+        Login
+      </Button>
+    </BaseFormBox>
   );
 };
 

@@ -6,6 +6,5 @@ from .serializers import SessionSerializer
 
 
 class SessionView(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [AllowAny]
     serializer_class = SessionSerializer
     queryset = Session.objects.all()

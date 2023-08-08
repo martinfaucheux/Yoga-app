@@ -6,6 +6,7 @@ import SessionDetailPage from "./components/SessionDetailPage";
 import BlogPage from "./components/BlogPage";
 import AboutPage from "./components/AboutPage";
 import LoginPage from "./components/LoginPage";
+import RegistrationForm from "./components/RegistrationForm";
 import CornerPicture from "./components/CornerPicture";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -40,6 +41,7 @@ const MainContent = () => {
     <Routes>
       <Route path="/" element={<Navigate to="sessions/" />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegistrationForm />} />
 
       <Route exact path="/sessions" element={<PrivateRoute />}>
         <Route exact path="/sessions" element={<SessionCardBoard />} />
