@@ -1,4 +1,4 @@
-import { Heading, Text, Box, Image, Button } from "@chakra-ui/react";
+import { Heading, Text, Box, Image, Button, Flex } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { customFetch } from "../utils/customFetch";
 import React, { useState, useEffect } from "react";

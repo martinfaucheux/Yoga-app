@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 
 const PageContainer = ({ children }) => {
   return (
-    <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
+    <Box p={4} borderRadius="lg" mx={"20"} my={10} overflow="hidden">
       {children}
     </Box>
   );
