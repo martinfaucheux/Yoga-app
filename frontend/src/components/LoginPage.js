@@ -21,6 +21,7 @@ import { PasswordField } from "./PasswordField";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,7 +31,11 @@ const LoginPage = () => {
       const response = await login(email, password);
       return navigate("/sessions");
     } catch (error) {
-      console.error("Login failed:", error);
+      setErrorMessage(
+        error.response.status === 401
+          ? "Login failed"
+          : "An unexpected error happened"
+      );
     }
   };
 
@@ -121,6 +126,12 @@ const LoginPage = () => {
               {location.state && location.state.successfulSignUp
                 ? successfulSignUp()
                 : null}
+              {errorMessage != "" ? (
+                <Alert status="error" borderRadius={"md"}>
+                  <AlertIcon />
+                  {errorMessage}
+                </Alert>
+              ) : null}
             </Stack>
           </Stack>
         </Box>
