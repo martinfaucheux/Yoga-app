@@ -8,11 +8,11 @@ import {
   Stack,
   Box,
   Center,
+  Heading,
   Text,
   Alert,
   AlertIcon,
   Flex,
-  Spacer,
 } from "@chakra-ui/react";
 import BaseFormBox from "./BaseFormBox";
 import { customFetch } from "../utils/customFetch";
@@ -83,8 +83,13 @@ function RegistrationForm() {
   };
 
   return (
-    <Flex justifyContent="center" alignItems="center" direction="row">
-      <Box flex={1.5} display={{ base: "none", sm: "block" }}>
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      mt={{ md: 0, xl: 100 }}
+      direction={{ md: "column", xl: "row" }}
+    >
+      <Box flex={1} display={{ base: "none", sm: "block" }}>
         <Text fontFamily="stylizedCursive" fontSize="150px" align="center">
           Yogine
         </Text>
@@ -93,14 +98,14 @@ function RegistrationForm() {
         <Box
           p={20}
           boxShadow={{ base: "non", sm: "lg" }}
-          mt={100}
           borderRadius={"xl"}
           background={{
             base: "none",
             sm: "linear-gradient(-28deg, white 75%, #A2EAC3)",
           }}
         >
-          <Stack maxW={"600px"} spacing={3}>
+          <Stack spacing={3} minW={{ sm: "xs", md: "md" }}>
+            <Heading mb={6}>Create your account</Heading>
             <FormControl isInvalid={alreadySubmitted && isFirstNameInvalid}>
               <FormLabel>First Name</FormLabel>
               <Input
