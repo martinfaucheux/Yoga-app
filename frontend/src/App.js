@@ -9,6 +9,7 @@ import LoginPage from "./components/LoginPage";
 import RegistrationForm from "./components/RegistrationForm";
 import CornerPicture from "./components/CornerPicture";
 import PrivateRoute from "./components/PrivateRoute";
+import { useAuth } from "./utils/AuthService";
 
 import {
   BrowserRouter as Router,
@@ -37,11 +38,19 @@ function App() {
 }
 
 const MainContent = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Routes>
       <Route path="/" element={<Navigate to="sessions/" />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegistrationForm />} />
+      <Route
+        path="/login"
+        element={isAuthenticated ? <Navigate to="/" /> : <LoginPage />}
+      />
+      <Route
+        path="/register"
+        element={isAuthenticated ? <Navigate to="/" /> : <RegistrationForm />}
+      />
 
       <Route exact path="/sessions" element={<PrivateRoute />}>
         <Route exact path="/sessions" element={<SessionCardBoard />} />
