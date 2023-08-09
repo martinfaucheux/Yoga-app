@@ -124,38 +124,6 @@ const LoginPage = () => {
       </Stack>
     </Container>
   );
-
-  // return (
-  //   <BaseFormBox>
-  //     {location.state && location.state.successfulSignUp
-  //       ? successfulSignUp()
-  //       : null}
-  //     <FormControl id="email">
-  //       <FormLabel>Email</FormLabel>
-  //       <Input
-  //         type="email"
-  //         value={email}
-  //         onChange={(e) => setEmail(e.target.value)}
-  //       />
-  //     </FormControl>
-  //     <FormControl id="password">
-  //       <FormLabel>Password</FormLabel>
-  //       <Input
-  //         type="password"
-  //         value={password}
-  //         onChange={(e) => setPassword(e.target.value)}
-  //         onKeyDown={handleKeyPress}
-  //       />
-  //     </FormControl>
-  //     <Button
-  //       onClick={handleLogin}
-  //       background="#A2EAC3"
-  //       _hover={{ bg: "#6DB990" }}
-  //     >
-  //       Login
-  //     </Button>
-  //   </BaseFormBox>
-  // );
 };
 
 export default LoginPage;
