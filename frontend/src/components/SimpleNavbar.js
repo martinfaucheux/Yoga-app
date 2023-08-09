@@ -111,7 +111,7 @@ export default function SimpleNavbar() {
               spacing={20}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.filter((e) => e.showBar).map((link) => (
+              {Links.map((link) => (
                 <NavLink key={link.name} to={link.to}>
                   {link.name}
                 </NavLink>
