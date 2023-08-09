@@ -5,8 +5,14 @@ import {
   Input,
   Button,
   FormErrorMessage,
+  Stack,
+  Box,
+  Center,
+  Text,
   Alert,
   AlertIcon,
+  Flex,
+  Spacer,
 } from "@chakra-ui/react";
 import BaseFormBox from "./BaseFormBox";
 import { customFetch } from "../utils/customFetch";
@@ -77,72 +83,94 @@ function RegistrationForm() {
   };
 
   return (
-    <BaseFormBox>
-      <FormControl isInvalid={alreadySubmitted && isFirstNameInvalid}>
-        <FormLabel>First Name</FormLabel>
-        <Input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-        />
-        <FormErrorMessage>{"First name is required"}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={alreadySubmitted && isLastNameInvalid}>
-        <FormLabel>Last Name</FormLabel>
-        <Input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-        />
-        <FormErrorMessage>{"Last name is required"}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={alreadySubmitted && isEmailInvalid}>
-        <FormLabel>Email</FormLabel>
-        <Input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <FormErrorMessage>{"This is not a valid email"}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={alreadySubmitted && isPasswordInvalid}>
-        <FormLabel>Password</FormLabel>
-        <Input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <FormErrorMessage>{"Password is required"}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={alreadySubmitted && isConfirmPasswordInvalid}>
-        <FormLabel>Confirm Password</FormLabel>
-        <Input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          onKeyDown={handleKeyPress}
-        />
-        <FormErrorMessage>{"Both passwords must match"}</FormErrorMessage>
-      </FormControl>
-      <Button
-        onClick={handleSubmit}
-        background="#A2EAC3"
-        _hover={{ bg: "#6DB990" }}
-      >
-        Sign up
-      </Button>
-      {signUpError ? (
-        <Alert status="error" borderRadius={"md"}>
-          <AlertIcon />
-          An unexpected error occurred while signing in...
-        </Alert>
-      ) : null}
-    </BaseFormBox>
+    <Flex justifyContent="center" alignItems="center" direction="row">
+      <Box flex={1.5} display={{ base: "none", sm: "block" }}>
+        <Text fontFamily="stylizedCursive" fontSize="150px" align="center">
+          Yogine
+        </Text>
+      </Box>
+      <Center flex={1}>
+        <Box
+          p={20}
+          boxShadow={{ base: "non", sm: "lg" }}
+          mt={100}
+          borderRadius={"xl"}
+          background={{
+            base: "none",
+            sm: "linear-gradient(-28deg, white 75%, #A2EAC3)",
+          }}
+        >
+          <Stack maxW={"600px"} spacing={3}>
+            <FormControl isInvalid={alreadySubmitted && isFirstNameInvalid}>
+              <FormLabel>First Name</FormLabel>
+              <Input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>{"First name is required"}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={alreadySubmitted && isLastNameInvalid}>
+              <FormLabel>Last Name</FormLabel>
+              <Input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>{"Last name is required"}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={alreadySubmitted && isEmailInvalid}>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>{"This is not a valid email"}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={alreadySubmitted && isPasswordInvalid}>
+              <FormLabel>Password</FormLabel>
+              <Input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>{"Password is required"}</FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={alreadySubmitted && isConfirmPasswordInvalid}
+            >
+              <FormLabel>Confirm Password</FormLabel>
+              <Input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                onKeyDown={handleKeyPress}
+              />
+              <FormErrorMessage>{"Both passwords must match"}</FormErrorMessage>
+            </FormControl>
+            <Button
+              onClick={handleSubmit}
+              background="#A2EAC3"
+              _hover={{ bg: "#6DB990" }}
+            >
+              Sign up
+            </Button>
+            {signUpError ? (
+              <Alert status="error" borderRadius={"md"}>
+                <AlertIcon />
+                An unexpected error occurred while signing in...
+              </Alert>
+            ) : null}
+          </Stack>
+        </Box>
+      </Center>
+    </Flex>
   );
 }
 
