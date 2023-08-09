@@ -85,7 +85,10 @@ const LoginPage = () => {
           bg={{ base: "transparent", sm: "bg.surface" }}
           boxShadow={{ base: "none", sm: "md" }}
           borderRadius={{ base: "none", sm: "xl" }}
-          background="linear-gradient(-28deg, white 75%, #A2EAC3)"
+          background={{
+            base: "white",
+            sm: "linear-gradient(-28deg, white 75%, #A2EAC3)",
+          }}
         >
           <Stack spacing="6">
             <Stack spacing="5">
