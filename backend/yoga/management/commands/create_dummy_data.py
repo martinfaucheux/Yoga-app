@@ -1,10 +1,10 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.utils import timezone
 from yoga.models import Session
 
 
 class Command(BaseCommand):
-    help = "Closes the specified poll for voting"
+    help = "Create dummy session data"
 
     def handle(self, *args, **options):
         now = timezone.now()
