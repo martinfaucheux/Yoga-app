@@ -10,5 +10,5 @@ class Session(BaseModel):
     duration = models.PositiveIntegerField()
     start_at = models.DateTimeField()
 
-    def _str_(self):
+    def __str__(self):
         return self.name

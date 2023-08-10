@@ -3,6 +3,8 @@ from yoga.models import Session
 
 
 class SessionSerializer(serializers.ModelSerializer):
+    booking = serializers.IntegerField()
+
     class Meta:
         model = Session
         fields = [
@@ -13,4 +15,5 @@ class SessionSerializer(serializers.ModelSerializer):
             "yoga_type",
             "duration",
             "start_at",
+            "booking",
         ]

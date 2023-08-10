@@ -7,12 +7,38 @@ import PageContainer from "./PageContainer";
 const SessionDetailPage = () => {
   const { sessionId } = useParams();
   const [session, setSession] = useState({});
+  const [isBooked, setIsBooked] = useState(false);
 
-  const fetchSessionData = () => {
-    customFetch
-      .get(`/api/sessions/${sessionId}`)
-      .then((res) => setSession(res.data))
-      .catch((err) => console.log(err));
+  const fetchSessionData = async () => {
+    try {
+      const response = await customFetch.get(`/api/sessions/${sessionId}/`);
+      setSession(response.data);
+      setIsBooked(!!response.data.booking);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const bookSession = async () => {
+    try {
+      await customFetch.post("/api/bookings/", {
+        session: sessionId,
+      });
+      // setIsBooked(true);
+      await fetchSessionData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cancelSession = async () => {
+    try {
+      await customFetch.delete(`/api/bookings/${session.booking}`);
+      // setIsBooked(false);
+      await fetchSessionData();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -37,9 +63,30 @@ const SessionDetailPage = () => {
         </Text>
         <Text mt={4}>{session.description}</Text>
 
-        <Button mt={4} background="#A2EAC3" _hover={{ bg: "#6DB990" }}>
-          Book
-        </Button>
+        {isBooked ? (
+          <>
+            <Text mt={4} color="gray.500">
+              you already booked this session
+            </Text>
+            <Button
+              mt={4}
+              background="#F5A55F"
+              _hover={{ bg: "#a67850" }}
+              onClick={cancelSession}
+            >
+              Cancel Booking
+            </Button>
+          </>
+        ) : (
+          <Button
+            mt={4}
+            background="#A2EAC3"
+            _hover={{ bg: "#c48651" }}
+            onClick={bookSession}
+          >
+            Book
+          </Button>
+        )}
       </Box>
     </>
   );
