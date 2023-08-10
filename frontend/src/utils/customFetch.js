@@ -1,6 +1,14 @@
 import axios from "axios";
 import { AuthService } from "./AuthService";
 
+const isTokenExpired = (response) => {
+  console.log(response);
+  return (
+    [403, 401].includes(response.status) &&
+    response.data.code === "token_not_valid"
+  );
+};
+
 export const customFetch = axios.create({
   // baseURL: "http://localhost:3000/api/",
   headers: {
@@ -28,8 +36,7 @@ customFetch.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    if (error.response.status === 403 && !originalRequest._retry) {
-      // TODO: Add more condition to check that it's about refresh token
+    if (isTokenExpired(error.response) && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const resp = await AuthService.refreshToken();
