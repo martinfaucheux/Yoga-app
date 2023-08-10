@@ -9,3 +9,6 @@ class Booking(BaseModel):
     session = models.ForeignKey(
         "yoga.Session", related_name="bookings", on_delete=models.CASCADE
     )
+
+    class Meta:
+        unique_together = [["user", "session"]]

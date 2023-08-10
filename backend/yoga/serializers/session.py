@@ -1,6 +1,5 @@
 from rest_framework import serializers
-
-from .models import Session
+from yoga.models import Session
 
 
 class SessionSerializer(serializers.ModelSerializer):

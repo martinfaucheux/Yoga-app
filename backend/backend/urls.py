@@ -7,10 +7,10 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 from user.views import UserView
-from yoga.views import SessionView
+from yoga.views import SessionViewSet
 
 router = routers.DefaultRouter()
-router.register(r"sessions", SessionView, "session")
+router.register(r"sessions", SessionViewSet, "session")
 router.register(r"users", UserView, "user")
 
 urlpatterns = [
