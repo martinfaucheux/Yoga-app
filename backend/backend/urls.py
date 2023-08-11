@@ -6,13 +6,13 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from user.views import UserView
+from user.views import UserViewSet
 from yoga.views import BookingViewSet, SessionViewSet
 
 router = routers.DefaultRouter()
 router.register(r"sessions", SessionViewSet, "session")
 router.register(r"bookings", BookingViewSet, "booking")
-router.register(r"users", UserView, "user")
+router.register(r"users", UserViewSet, "user")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

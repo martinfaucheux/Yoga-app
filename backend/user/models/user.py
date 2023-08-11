@@ -17,7 +17,9 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields = {**extra_fields, "is_staff": True, "is_superuser": True}
+        extra_fields = dict(
+            **extra_fields, is_staff=True, is_superuser=True, is_verified=True
+        )
         return self.create_user(email, password, **extra_fields)
 
 
@@ -27,6 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
 
     objects = UserManager()
 

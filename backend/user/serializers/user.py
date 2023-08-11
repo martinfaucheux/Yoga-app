@@ -1,6 +1,6 @@
 from rest_framework import serializers
-
-from .models import User
+from user.models import User
+from user.services.user import create_user
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        return create_user(**validated_data)
 
     def update(self, instance, validated_data):
         if password := validated_data.pop("password"):

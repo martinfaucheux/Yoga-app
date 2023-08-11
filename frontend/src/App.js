@@ -8,6 +8,7 @@ import LoginPage from "./components/LoginPage";
 import RegistrationForm from "./components/RegistrationForm";
 import CornerPicture from "./components/CornerPicture";
 import PrivateRoute from "./components/PrivateRoute";
+import EmailVerification from "./components/EmailVerification";
 import { useAuth } from "./utils/AuthService";
 
 import {
@@ -49,6 +50,10 @@ const MainContent = () => {
       <Route
         path="/register"
         element={isAuthenticated ? <Navigate to="/" /> : <RegistrationForm />}
+      />
+      <Route
+        path="/verify"
+        element={isAuthenticated ? <Navigate to="/" /> : <EmailVerification />}
       />
 
       <Route exact path="/sessions" element={<PrivateRoute />}>

@@ -1,8 +1,6 @@
-from django.core import mail
-from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
+from utils.email import send_email
 
 DEFAULT_EMAIL = "martin.faucheux@gmail.com"
 
@@ -26,13 +24,6 @@ class Command(BaseCommand):
             {"first_name": "My dude", "verification_url": "https://localhost:3000"},
         )
 
-        send_mail(
-            "Verify your email",
-            strip_tags(html_message),
-            "from@example.com",
-            [to_email],
-            html_message=html_message,
-            fail_silently=False,
-        )
+        send_email("Verify your email", html_message, [to_email])
 
         self.stdout.write(self.style.SUCCESS("Email sent"))
