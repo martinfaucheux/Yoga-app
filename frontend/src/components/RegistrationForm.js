@@ -14,7 +14,6 @@ import {
   AlertIcon,
   Flex,
 } from "@chakra-ui/react";
-import BaseFormBox from "./BaseFormBox";
 import { customFetch } from "../utils/customFetch";
 import { useNavigate } from "react-router-dom";
 
