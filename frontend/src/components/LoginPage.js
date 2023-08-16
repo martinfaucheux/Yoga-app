@@ -51,8 +51,8 @@ const LoginPage = () => {
 
   const successfulSignUp = () => (
     <Alert status="success" borderRadius={"md"} colorScheme={"blue"}>
-      <AlertIcon />
-      Account created successfully! You can now log in.
+      <AlertIcon />A validation email has been sent to your address. Check your
+      mailbox!
     </Alert>
   );
 

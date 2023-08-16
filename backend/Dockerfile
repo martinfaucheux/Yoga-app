@@ -6,7 +6,10 @@ WORKDIR /backend
 
 COPY Pipfile Pipfile.lock ./
 RUN pip install -U pipenv
-RUN pipenv install --system
+
+# Install dependencies based on environment
+ARG ENVIRONMENT
+RUN if [ "$ENVIRONMENT" = "dev" ]; then pipenv install --dev --system; else pipenv install --system; fi
 
 # copy from the current directory of the Dockerfile to /api in the image
 COPY . .

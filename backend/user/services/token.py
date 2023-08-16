@@ -1,10 +1,7 @@
-from datetime import timedelta
-
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
+from user.constants import TOKEN_EXPIRATION_DELAY
 from user.models import Token, TokenTypes, User
-
-TOKEN_EXPIRATION_DELAY = timedelta(hours=1)
 
 
 def generate_token(user: User) -> Token:
@@ -12,7 +9,6 @@ def generate_token(user: User) -> Token:
         user=user,
         type=TokenTypes.VERIFICATION,
         expire_at=timezone.now() + TOKEN_EXPIRATION_DELAY,
-        is_used=False,
     )
 
 

@@ -1,13 +1,8 @@
 from uuid import uuid4
 
 from django.db import models
+from user.constants import TokenTypes
 from utils.models import BaseModel
-
-VERIFICATION = "verification"
-
-
-class TokenTypes(models.TextChoices):
-    VERIFICATION = "verification"
 
 
 class Token(BaseModel):
@@ -24,4 +19,9 @@ class Token(BaseModel):
     expire_at = models.DateTimeField(
         null=True, help_text="The expiration date of the token"
     )
-    is_used = models.BooleanField(default=False)
+    used_at = models.DateTimeField(
+        null=True, help_text="The expiration date of the token"
+    )
+
+    def is_used(self) -> bool:
+        return self.used_at is not None

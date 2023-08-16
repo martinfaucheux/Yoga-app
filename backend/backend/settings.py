@@ -17,6 +17,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "dev")
+IS_DEV = ENVIRONMENT == "dev"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -46,6 +48,11 @@ INSTALLED_APPS = [
     "yoga",
     "user",
 ]
+
+if IS_DEV:
+    # Always use IPython for shell_plus
+    SHELL_PLUS = "ipython"
+    INSTALLED_APPS.extend(["django_extensions"])
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

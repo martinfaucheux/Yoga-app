@@ -1,6 +1,9 @@
 services:
   api:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        ENVIRONMENT: ${ENVIRONMENT}
     env_file:
       - .env
     ports:
