@@ -15,8 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { useAuth } from "../utils/AuthService";
 import { useNavigate, useLocation, Link as RouterLink } from "react-router-dom";
-import BaseFormBox from "./BaseFormBox";
 import { PasswordField } from "./PasswordField";
+
+const NON_VERIFIED_MESSAGE = "The user is not verified";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -28,14 +29,17 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await login(email, password);
+      await login(email, password);
       return navigate("/sessions");
     } catch (error) {
-      setErrorMessage(
-        error.response.status === 401
-          ? "Login failed"
-          : "An unexpected error happened"
-      );
+      let message = "An unexpected error happened";
+      console.log(error);
+      if (error.response.status === 401) {
+        message = "Login failed";
+      } else if (error.response.data.details[0] === NON_VERIFIED_MESSAGE) {
+        message = NON_VERIFIED_MESSAGE;
+      }
+      setErrorMessage(message);
     }
   };
 
@@ -126,7 +130,7 @@ const LoginPage = () => {
               {location.state && location.state.successfulSignUp
                 ? successfulSignUp()
                 : null}
-              {errorMessage != "" ? (
+              {errorMessage !== "" ? (
                 <Alert status="error" borderRadius={"md"}>
                   <AlertIcon />
                   {errorMessage}
