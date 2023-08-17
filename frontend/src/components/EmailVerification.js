@@ -22,18 +22,30 @@ const EmailVerification = () => {
     verifyToken();
   }, []);
 
+  const displayError = () => (
+    <>
+      <Alert status="error" borderRadius={"md"} mt={5}>
+        <AlertIcon />
+        {errorMessage}
+      </Alert>
+    </>
+  );
+
+  const displayText = () => (
+    <Text mt={5}>
+      {isVerified ? "Your email is verified, you can now login" : "Verifying"}
+    </Text>
+  );
+
   return (
-    <Container>
-      <Heading>Verify your email</Heading>
-      <Text>
-        {isVerified ? "Your email is verified, you can now login" : "Verifying"}
-      </Text>
-      {errorMessage !== "" ? (
-        <Alert status="error" borderRadius={"md"}>
-          <AlertIcon />
-          {errorMessage}
-        </Alert>
-      ) : null}
+    <Container
+      maxW="lg"
+      py={{ base: "12", md: "24" }}
+      px={{ base: "0", sm: "8" }}
+    >
+      <Heading mt={5}>Verify your email</Heading>
+
+      {errorMessage === "" ? displayText() : displayError()}
     </Container>
   );
 };
