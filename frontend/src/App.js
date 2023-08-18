@@ -9,6 +9,8 @@ import RegistrationForm from "./components/RegistrationForm";
 import CornerPicture from "./components/CornerPicture";
 import PrivateRoute from "./components/PrivateRoute";
 import EmailVerification from "./components/EmailVerification";
+import ResetPasswordRequest from "./components/ResetPasswordRequest";
+import ResetPassword from "./components/ResetPassword";
 import { useAuth } from "./utils/AuthService";
 
 import {
@@ -54,6 +56,16 @@ const MainContent = () => {
       <Route
         path="/verify"
         element={isAuthenticated ? <Navigate to="/" /> : <EmailVerification />}
+      />
+      <Route
+        path="/request-reset-password"
+        element={
+          isAuthenticated ? <Navigate to="/" /> : <ResetPasswordRequest />
+        }
+      />
+      <Route
+        path="/reset-password"
+        element={isAuthenticated ? <Navigate to="/" /> : <ResetPassword />}
       />
 
       <Route exact path="/sessions" element={<PrivateRoute />}>

@@ -1,7 +1,15 @@
-import { Container, Heading, Text, Alert, AlertIcon } from "@chakra-ui/react";
+import {
+  Container,
+  Heading,
+  Text,
+  Alert,
+  AlertIcon,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { customFetch } from "../utils/customFetch";
+import { Link } from "react-router-dom";
 
 const EmailVerification = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +41,21 @@ const EmailVerification = () => {
 
   const displayText = () => (
     <Text mt={5}>
-      {isVerified ? "Your email is verified, you can now login" : "Verifying"}
+      {isVerified ? (
+        <>
+          Your email is verified, you can now{" "}
+          <ChakraLink
+            to="/login"
+            as={Link}
+            color="#6DB990"
+            style={{ fontWeight: "bold" }}
+          >
+            login
+          </ChakraLink>
+        </>
+      ) : (
+        "Verifying"
+      )}
     </Text>
   );
 

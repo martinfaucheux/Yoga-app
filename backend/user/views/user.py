@@ -85,6 +85,7 @@ class UserViewSet(
         except Token.DoesNotExist:
             raise PermissionError({"token": ["Invalid token"]})
 
+        user = token.user
         if not user.is_verified:
             raise PermissionError({"user": ["User is not verified"]})
 
@@ -92,7 +93,6 @@ class UserViewSet(
             token.used_at = timezone.now()
             token.save(update_fields=["used_at"])
 
-            user = token.user
             user.set_password(serializer.validated_data["password"])
             user.save()
 

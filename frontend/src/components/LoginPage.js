@@ -8,6 +8,7 @@ import {
   Link as ChakraLink,
   FormLabel,
   Heading,
+  HStack,
   Box,
   Container,
   Alert,
@@ -114,11 +115,16 @@ const LoginPage = () => {
                 onKeyDown={handleKeyPress}
               />
             </Stack>
-            {/* <HStack justify="space-between">
-              <Button variant="text" size="sm">
+            <HStack justify="space-between">
+              <ChakraLink
+                to="/request-reset-password"
+                color="#6DB990"
+                style={{ fontWeight: "bold" }}
+                as={RouterLink}
+              >
                 Forgot password?
-              </Button>
-            </HStack> */}
+              </ChakraLink>
+            </HStack>
             <Stack spacing="6">
               <Button
                 onClick={handleLogin}

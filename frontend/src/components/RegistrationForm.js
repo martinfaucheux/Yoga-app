@@ -36,7 +36,7 @@ function RegistrationForm() {
   const isPasswordInvalid = formData.password === "";
   const isConfirmPasswordInvalid =
     formData.confirmPassword === "" &&
-    formData.password != formData.confirmPassword;
+    formData.password !== formData.confirmPassword;
 
   const disableButton =
     isFirstNameInvalid ||
