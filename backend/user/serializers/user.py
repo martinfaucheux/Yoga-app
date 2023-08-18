@@ -17,3 +17,12 @@ class UserSerializer(serializers.ModelSerializer):
         if password := validated_data.pop("password"):
             instance.set_password(password)
         return super().update(instance, validated_data)
+
+
+class RequestResetPaswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField()
+    token = serializers.UUIDField()

@@ -1,5 +1,5 @@
 from rest_framework import serializers
 
 
-class TokenVerificationSerializer(serializers.Serializer):
+class TokenSerializer(serializers.Serializer):
     token = serializers.UUIDField()
