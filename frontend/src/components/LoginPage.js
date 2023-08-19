@@ -50,10 +50,10 @@ const LoginPage = () => {
     }
   };
 
-  const successfulSignUp = () => (
+  const passedMessage = () => (
     <Alert status="success" borderRadius={"md"} colorScheme={"blue"}>
-      <AlertIcon />A validation email has been sent to your address. Check your
-      mailbox!
+      <AlertIcon />
+      {location.state.passedMessage}
     </Alert>
   );
 
@@ -133,8 +133,8 @@ const LoginPage = () => {
               >
                 Sign in
               </Button>
-              {location.state && location.state.successfulSignUp
-                ? successfulSignUp()
+              {location.state && location.state.passedMessage
+                ? passedMessage()
                 : null}
               {errorMessage !== "" ? (
                 <Alert status="error" borderRadius={"md"}>

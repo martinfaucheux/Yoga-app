@@ -68,11 +68,15 @@ function RegistrationForm() {
     try {
       await customFetch.post("/api/users/", postData);
       setSignUpError(false);
-      navigate("/login", { state: { successfulSignUp: true } });
+      navigate("/login", {
+        state: {
+          passedMessage:
+            "A validation email has been sent to your address. Check your mailbox!",
+        },
+      });
     } catch (error) {
       setSignUpError(true);
     }
-    console.log(formData);
   };
 
   const handleKeyPress = (event) => {
