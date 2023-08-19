@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import EmailVerification from "./components/EmailVerification";
 import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPassword from "./components/ResetPassword";
+import NotFound from "./components/NotFound";
 import { useAuth } from "./utils/AuthService";
 
 import {
@@ -44,6 +45,8 @@ const MainContent = () => {
 
   return (
     <Routes>
+      <Route path="*" element={<NotFound />} />
+
       <Route path="/" element={<Navigate to="sessions/" />} />
       <Route
         path="/login"
