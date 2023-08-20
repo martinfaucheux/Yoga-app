@@ -1,10 +1,10 @@
 from django.db import transaction
 from django.utils import timezone
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 from rest_framework.viewsets import GenericViewSet
 from user.constants import TokenTypes
 from user.models import Token, User
@@ -26,6 +26,17 @@ class UserViewSet(
 
     def get_queryset(self):
         return User.objects.filter(id=self.request.user.id)
+
+    @action(
+        detail=False,
+        methods=["get"],
+        permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES,
+        serializer_class=UserSerializer,
+    )
+    def me(self, request):
+        instance = self.get_queryset().get()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
     @action(detail=False, methods=["post"], serializer_class=TokenSerializer)
     def verify(self, request):

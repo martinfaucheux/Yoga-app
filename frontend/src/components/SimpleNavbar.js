@@ -18,7 +18,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthService";
-import { useEffect, useState } from "react";
+import { useUserData } from "../utils/UserDataService";
 
 const Links = [
   { name: "Book", to: "/sessions" },
@@ -48,8 +48,13 @@ const NavLink = (props) => {
 };
 
 const CornerMenu = () => {
-  const { isAuthenticated, login, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const userData = useUserData();
+
+  const userName = userData
+    ? `${userData.first_name} ${userData.last_name}`
+    : null;
 
   const logoutAndRedirect = () => {
     logout();
@@ -65,12 +70,7 @@ const CornerMenu = () => {
         cursor={"pointer"}
         minW={0}
       >
-        <Avatar
-          size={"md"}
-          src={
-            "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-          }
-        />
+        <Avatar size={"md"} name={userName} bg="white" color="black" />
       </MenuButton>
       <MenuList>
         <MenuItem>Link 1</MenuItem>
