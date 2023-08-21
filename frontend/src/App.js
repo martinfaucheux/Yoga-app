@@ -13,6 +13,7 @@ import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
 import { useAuth } from "./utils/AuthService";
+import { Fonts } from "./utils/Fonts";
 
 import {
   BrowserRouter as Router,
@@ -25,6 +26,8 @@ import {
 const theme = extendTheme({
   fonts: {
     stylizedCursive: "Dancing Script, cursive",
+    heading: "Libre Franklin",
+    body: "Libre Franklin",
   },
   colors: {
     emerald: {
@@ -57,6 +60,7 @@ const theme = extendTheme({
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <Fonts />
       <Router>
         <SimpleNavbar />
         <MainContent />
