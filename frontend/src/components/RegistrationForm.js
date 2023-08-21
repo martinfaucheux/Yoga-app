@@ -162,11 +162,7 @@ function RegistrationForm() {
               />
               <FormErrorMessage>{"Both passwords must match"}</FormErrorMessage>
             </FormControl>
-            <Button
-              onClick={handleSubmit}
-              background="#A2EAC3"
-              _hover={{ bg: "#6DB990" }}
-            >
+            <Button onClick={handleSubmit} colorScheme="emerald">
               Sign up
             </Button>
             {signUpError ? (

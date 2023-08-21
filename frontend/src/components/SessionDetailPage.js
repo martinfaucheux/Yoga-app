@@ -68,22 +68,12 @@ const SessionDetailPage = () => {
             <Text mt={4} color="gray.500">
               you already booked this session
             </Text>
-            <Button
-              mt={4}
-              background="#F5A55F"
-              _hover={{ bg: "#a67850" }}
-              onClick={cancelSession}
-            >
+            <Button mt={4} colorScheme="sunset" onClick={cancelSession}>
               Cancel Booking
             </Button>
           </>
         ) : (
-          <Button
-            mt={4}
-            background="#A2EAC3"
-            _hover={{ bg: "#c48651" }}
-            onClick={bookSession}
-          >
+          <Button mt={4} colorScheme="emerald" onClick={bookSession}>
             Book
           </Button>
         )}

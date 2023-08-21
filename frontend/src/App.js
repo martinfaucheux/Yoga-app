@@ -26,6 +26,32 @@ const theme = extendTheme({
   fonts: {
     stylizedCursive: "Dancing Script, cursive",
   },
+  colors: {
+    emerald: {
+      50: "#e2fcf1",
+      100: "#bef2d8",
+      200: "#97e8bc",
+      300: "#6fdea9",
+      400: "#49d59a",
+      500: "#30bb8a",
+      600: "#249273",
+      700: "#176857",
+      800: "#093e38",
+      900: "#001712",
+    },
+    sunset: {
+      50: "#fff1de",
+      100: "#fed6b3",
+      200: "#f9bc86",
+      300: "#f5a157",
+      400: "#f18629",
+      500: "#d76c10",
+      600: "#a8540a",
+      700: "#783c05",
+      800: "#4a2300",
+      900: "#1d0a00",
+    },
+  },
 });
 
 function App() {

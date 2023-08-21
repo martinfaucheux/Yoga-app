@@ -38,7 +38,8 @@ const NavLink = (props) => {
       rounded={"md"}
       _hover={{
         textDecoration: "none",
-        bg: "#6DB990",
+        bg: "emerald.500",
+        color: "white",
       }}
       to={to}
     >
@@ -92,7 +93,7 @@ export default function SimpleNavbar() {
 
   return (
     <>
-      <Box bg={"#A2EAC3"} px={{ base: 2, sm: 8 }}>
+      <Box bg="emerald.200" px={{ base: 2, sm: 8 }}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -100,7 +101,7 @@ export default function SimpleNavbar() {
             aria-label={"Open Menu"}
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
-            background={"#6DB990"}
+            background="emerald.500"
           />
           <HStack spacing={20} alignItems={"center"}>
             <Box fontFamily="stylizedCursive" fontSize="4xl">
@@ -126,16 +127,10 @@ export default function SimpleNavbar() {
                 spacing={{ base: "1", sm: "5" }}
                 flex={{ base: 1, md: 0 }}
               >
-                <Button
-                  as={Link}
-                  to="/login"
-                  background={"#A2EAC3"}
-                  borderWidth={{ base: 0, sm: 2 }}
-                  borderColor={"black"}
-                >
+                <Button colorScheme="emerald" as={Link} to="/login">
                   Sign in
                 </Button>
-                <Button as={Link} to="/register">
+                <Button colorScheme="gray" as={Link} to="/register">
                   Sign up
                 </Button>
               </HStack>

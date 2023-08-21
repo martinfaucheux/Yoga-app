@@ -4,7 +4,7 @@ import {
   Text,
   Alert,
   AlertIcon,
-  Link as ChakraLink,
+  Button,
 } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -44,14 +44,9 @@ const EmailVerification = () => {
       {isVerified ? (
         <>
           Your email is verified, you can now{" "}
-          <ChakraLink
-            to="/login"
-            as={Link}
-            color="#6DB990"
-            style={{ fontWeight: "bold" }}
-          >
+          <Button colorScheme="emerald" variant="link" as={Link} to="/login">
             login
-          </ChakraLink>
+          </Button>
         </>
       ) : (
         "Verifying"

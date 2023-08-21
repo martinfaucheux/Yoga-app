@@ -63,11 +63,7 @@ const ResetPasswordRequest = () => {
           />
           <FormErrorMessage>{"This is not a valid email"}</FormErrorMessage>
         </FormControl>
-        <Button
-          onClick={handleSubmit}
-          background="#A2EAC3"
-          _hover={{ bg: "#6DB990" }}
-        >
+        <Button colorScheme="emerald" onClick={handleSubmit}>
           Send reset link
         </Button>
         {!!apiError ? (

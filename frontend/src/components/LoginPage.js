@@ -5,7 +5,6 @@ import {
   FormControl,
   Text,
   Stack,
-  Link as ChakraLink,
   FormLabel,
   Heading,
   HStack,
@@ -78,14 +77,14 @@ const LoginPage = () => {
             </Heading>
             <Text color="fg.muted">
               Don't have an account?{" "}
-              <ChakraLink
+              <Button
                 to="/register"
-                color="#6DB990"
-                style={{ fontWeight: "bold" }}
+                colorScheme="emerald"
+                variant="link"
                 as={RouterLink}
               >
                 Sign up
-              </ChakraLink>
+              </Button>
             </Text>
           </Stack>
         </Stack>
@@ -116,21 +115,17 @@ const LoginPage = () => {
               />
             </Stack>
             <HStack justify="space-between">
-              <ChakraLink
-                to="/request-reset-password"
-                color="#6DB990"
-                style={{ fontWeight: "bold" }}
+              <Button
+                colorScheme="emerald"
+                variant="link"
                 as={RouterLink}
+                to="/request-reset-password"
               >
                 Forgot password?
-              </ChakraLink>
+              </Button>
             </HStack>
             <Stack spacing="6">
-              <Button
-                onClick={handleLogin}
-                background="#A2EAC3"
-                _hover={{ bg: "#6DB990" }}
-              >
+              <Button onClick={handleLogin} colorScheme="emerald">
                 Sign in
               </Button>
               {location.state && location.state.passedMessage
