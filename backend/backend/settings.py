@@ -66,22 +66,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "backend.urls"
-# TEMPLATES = [
-#     {
-#         "BACKEND": "django.template.backends.django.DjangoTemplates",
-#         "DIRS": glob.glob("**/templates", recursive=True),
-#         "APP_DIRS": True,
-#         "OPTIONS": {
-#             "context_processors": [
-#                 "django.template.context_processors.debug",
-#                 "django.template.context_processors.request",
-#                 "django.contrib.auth.context_processors.auth",
-#                 "django.contrib.messages.context_processors.messages",
-#                 "config.context_processors.from_settings",
-#             ]
-#         },
-#     }
-# ]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -106,13 +91,21 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 DATABASES = {
     "default": {
+        "ENGINE": "django_cockroachdb",
+        "NAME": os.environ.get("COCKROACH_DATABASE"),
+        "USER": os.environ.get("COCKROACH_USER"),
+        "PASSWORD": os.environ.get("COCKROACH_PASSWORD"),
+        "HOST": os.environ.get("COCKROACH_HOST"),
+        "PORT": os.environ.get("COCKROACH_PORT", "5432"),
+    },
+    "postgres_OLD": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("POSTGRES_DATABASE"),
         "USER": os.environ.get("POSTGRES_USER"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
         "HOST": os.environ.get("POSTGRES_HOST"),
         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
-    }
+    },
 }
 
 REST_FRAMEWORK = {

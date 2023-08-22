@@ -10,6 +10,7 @@ django-cors-headers = "*"
 openai = "*"
 djangorestframework-simplejwt = "*"
 psycopg2-binary = "*"
+django-cockroachdb = "*"
 
 [dev-packages]
 django-extensions = "*"
