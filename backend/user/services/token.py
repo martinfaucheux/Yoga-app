@@ -15,7 +15,7 @@ def verified_authentication_rule(user: User):
     Authentication rule for simple JWT package to check that the user is verified
     when logging in
     """
-    if not user.is_active:
+    if (not user) or not user.is_active:
         return False
 
     if not user.is_verified:
