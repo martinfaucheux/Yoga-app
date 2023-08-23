@@ -99,7 +99,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
+    "cockroach": {
         "ENGINE": "django_cockroachdb",
         "NAME": os.environ.get("COCKROACH_DATABASE"),
         "USER": os.environ.get("COCKROACH_USER"),
@@ -107,7 +107,7 @@ DATABASES = {
         "HOST": os.environ.get("COCKROACH_HOST"),
         "PORT": os.environ.get("COCKROACH_PORT", "5432"),
     },
-    "postgres_OLD": {
+    "postgres": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("POSTGRES_DATABASE"),
         "USER": os.environ.get("POSTGRES_USER"),
@@ -116,6 +116,7 @@ DATABASES = {
         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     },
 }
+DATABASES["default"] = DATABASES[os.environ.get("DEFAULT_DATABASE", "cockroach")]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
