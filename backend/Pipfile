@@ -12,6 +12,7 @@ djangorestframework-simplejwt = "*"
 psycopg2-binary = "*"
 django-cockroachdb = "*"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 django-extensions = "*"
