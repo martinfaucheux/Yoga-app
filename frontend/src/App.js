@@ -14,6 +14,7 @@ import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
 import { useAuth } from "./utils/AuthService";
 import { Fonts } from "./utils/Fonts";
+import CalendarView from "./components/Calendar";
 
 import {
   BrowserRouter as Router,
@@ -100,6 +101,7 @@ const MainContent = () => {
         path="/reset-password"
         element={isAuthenticated ? <Navigate to="/" /> : <ResetPassword />}
       />
+      <Route path="/calendar" element={<CalendarView />} />
 
       <Route exact path="/sessions" element={<PrivateRoute />}>
         <Route exact path="/sessions" element={<SessionCardBoard />} />
