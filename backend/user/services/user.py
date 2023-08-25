@@ -1,13 +1,9 @@
 from django.template.loader import render_to_string
-from user.constants import (
-    RESET_PASSWORD_URL,
-    URL_TOKEN_KEY,
-    VERIFICATION_URL,
-    TokenTypes,
-)
+from user.constants import TokenTypes
 from user.models import User
 from user.services.token import generate_token
 from utils.email import send_email
+from utils.format import build_front_url
 
 
 def create_user(email, **extra_fields):
@@ -27,9 +23,7 @@ def send_verification_email(user):
             "verify_email.html",
             {
                 "first_name": user.first_name,
-                "verification_url": VERIFICATION_URL.format(
-                    key=URL_TOKEN_KEY, token=token.token
-                ),
+                "verification_url": build_front_url("/verify", {"token": token.token}),
             },
         ),
         addresses=[user.email],
@@ -45,8 +39,8 @@ def send_reset_password_email(user):
             "reset_password.html",
             {
                 "first_name": user.first_name,
-                "reset_password_url": RESET_PASSWORD_URL.format(
-                    key=URL_TOKEN_KEY, token=token.token
+                "reset_password_url": build_front_url(
+                    "/reset-password", {"token": token.token}
                 ),
             },
         ),

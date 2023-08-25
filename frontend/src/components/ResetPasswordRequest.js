@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import { customFetch } from "../utils/customFetch";
 
-const ResetPasswordRequest = () => {
+const RestPasswordForm = ({ setSuccesfullySubmitted }) => {
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const [emailAddress, setEmailAddress] = useState("");
   const [apiError, setApiError] = useState("");
@@ -25,6 +25,7 @@ const ResetPasswordRequest = () => {
       await customFetch.post("/api/users/request_reset_password/", {
         email: emailAddress,
       });
+      setSuccesfullySubmitted(true);
     } catch (error) {
       setApiError("An error occurred");
     }
@@ -41,6 +42,39 @@ const ResetPasswordRequest = () => {
   };
 
   return (
+    <>
+      <Text>
+        Type the email you used to sign up on Yogine and we'll send you a
+        password reset email.
+      </Text>
+      <FormControl isInvalid={alreadySubmitted && isEmailInvalid()}>
+        <FormLabel>Email</FormLabel>
+        <Input
+          type="email"
+          name="email"
+          value={emailAddress}
+          onChange={(event) => setEmailAddress(event.target.value)}
+          onKeyDown={handleKeyPress}
+        />
+        <FormErrorMessage>This is not a valid email</FormErrorMessage>
+      </FormControl>
+      <Button colorScheme="emerald" onClick={handleSubmit}>
+        Send reset link
+      </Button>
+      {!!apiError ? (
+        <Alert status="error" borderRadius={"md"}>
+          <AlertIcon />
+          An unexpected error occurred while reseting your password...
+        </Alert>
+      ) : null}
+    </>
+  );
+};
+
+const ResetPasswordRequest = () => {
+  const [succesfullySubmitted, setSuccesfullySubmitted] = useState(false);
+
+  return (
     <Container
       maxW="lg"
       py={{ base: "12", md: "24" }}
@@ -48,30 +82,13 @@ const ResetPasswordRequest = () => {
     >
       <Stack spacing={5}>
         <Heading>Reset your password</Heading>
-        <Text>
-          Type the email you used to sign up on Yogine and we'll send you a
-          password reset email.
-        </Text>
-        <FormControl isInvalid={alreadySubmitted && isEmailInvalid()}>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            name="email"
-            value={emailAddress}
-            onChange={(event) => setEmailAddress(event.target.value)}
-            onKeyDown={handleKeyPress}
-          />
-          <FormErrorMessage>{"This is not a valid email"}</FormErrorMessage>
-        </FormControl>
-        <Button colorScheme="emerald" onClick={handleSubmit}>
-          Send reset link
-        </Button>
-        {!!apiError ? (
-          <Alert status="error" borderRadius={"md"}>
-            <AlertIcon />
-            An unexpected error occurred while reseting your password...
-          </Alert>
-        ) : null}
+        {succesfullySubmitted ? (
+          <Text>
+            Password reset request succesfully submitted, check your emails!
+          </Text>
+        ) : (
+          <RestPasswordForm setSuccesfullySubmitted={setSuccesfullySubmitted} />
+        )}
       </Stack>
     </Container>
   );

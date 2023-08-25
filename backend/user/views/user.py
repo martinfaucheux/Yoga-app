@@ -74,7 +74,7 @@ class UserViewSet(
 
         try:
             user = User.objects.get(email=email)
-        except User.DoesNotExist():
+        except User.DoesNotExist:
             log(f"Unknown user: {email}")
         else:
             send_reset_password_email(user)
