@@ -36,7 +36,10 @@ const LoginPage = () => {
       console.log(error);
       if (error.response.status === 401) {
         message = "Login failed";
-      } else if (error.response.data.details[0] === NON_VERIFIED_MESSAGE) {
+      } else if (
+        error.response.status === 403 &&
+        error.response.data.details[0] === NON_VERIFIED_MESSAGE
+      ) {
         message = NON_VERIFIED_MESSAGE;
       }
       setErrorMessage(message);
