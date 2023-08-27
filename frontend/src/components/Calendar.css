@@ -7,7 +7,7 @@
 }
 
 .react-calendar {
-  width: 400px;
+  width: 100%;
   max-width: 100%;
   background-color: #fff;
   color: #222;
@@ -28,9 +28,6 @@
 }
 .react-calendar__navigation button[disabled] {
   background-color: #f0f0f0;
-}
-abbr[title] {
-  text-decoration: none;
 }
 .react-calendar__month-view__days__day--weekend {
   color: var(--main-color);
