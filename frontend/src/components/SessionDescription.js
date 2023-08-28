@@ -21,7 +21,7 @@ const fromMarkdown = (content) => {
 const SessionDescription = () => (
   <Box ml={10}>
     <Heading mb={10} align="center">
-      🌿 Hatha Yoga Annecy Lake 🌊
+      🌿 Hatha yoga by Annecy Lake 🌊
     </Heading>
     <VStack spacing={5} mb={10} align="flex-start" justify="flex-start">
       <JustifiedText>

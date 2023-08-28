@@ -24,7 +24,6 @@ const SessionDetailPage = () => {
       await customFetch.post("/api/bookings/", {
         session: sessionId,
       });
-      // setIsBooked(true);
       await fetchSessionData();
     } catch (error) {
       console.log(error);
@@ -34,7 +33,6 @@ const SessionDetailPage = () => {
   const cancelSession = async () => {
     try {
       await customFetch.delete(`/api/bookings/${session.booking}`);
-      // setIsBooked(false);
       await fetchSessionData();
     } catch (error) {
       console.log(error);

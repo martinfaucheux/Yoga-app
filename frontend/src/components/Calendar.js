@@ -9,6 +9,8 @@ import {
   Flex,
   Button,
   Spacer,
+  HStack,
+  Divider,
 } from "@chakra-ui/react";
 import "./Calendar.css";
 import { customFetch } from "../utils/customFetch";
@@ -21,6 +23,32 @@ const formatHours = (date) => {
 };
 
 const SessionCard = ({ session }) => {
+  const [isBooked, setIsBooked] = useState(!!session.booking);
+
+  const bookSession = async () => {
+    try {
+      await customFetch.post("/api/bookings/", {
+        session: session.id,
+      });
+      setIsBooked(true);
+      // await fetchSessionData();
+    } catch (error) {
+      // TODO: do better
+      console.log(error);
+    }
+  };
+
+  const cancelBooking = async () => {
+    try {
+      await customFetch.delete(`/api/bookings/${session.booking}`);
+      setIsBooked(false);
+      // await fetchSessionData();
+    } catch (error) {
+      // TODO: do better
+      console.log(error);
+    }
+  };
+
   return (
     <Box
       borderRadius={"xl"}
@@ -29,16 +57,25 @@ const SessionCard = ({ session }) => {
       p={4}
       bg="white"
     >
-      <Flex direction="row">
+      <Flex direction="row" spacing={2}>
         <Center>
-          <Text ml={2}>
-            Book session at {formatHours(new Date(session.start_at))}
-          </Text>
+          <HStack ml={2} spacing={4}>
+            <Text>Session at {formatHours(new Date(session.start_at))}</Text>
+            {isBooked ? (
+              <Text color="gray.400">You already booked this session</Text>
+            ) : null}
+          </HStack>
         </Center>
         <Spacer />
-        <Button colorScheme="emerald" px={5}>
-          Book
-        </Button>
+        {isBooked ? (
+          <Button colorScheme="sunset" px={5} onClick={cancelBooking}>
+            Cancel booking
+          </Button>
+        ) : (
+          <Button colorScheme="emerald" px={5} onClick={bookSession}>
+            Book Now!
+          </Button>
+        )}
       </Flex>
     </Box>
   );
@@ -121,11 +158,14 @@ function CalendarView() {
           </Box>
 
           {selectedSessions.length ? (
-            <VStack align="stretch" spacing={5} maxW="600px" w="100%">
-              {selectedSessions.map((session) => (
-                <SessionCard id={session.id} session={session} />
-              ))}
-            </VStack>
+            <>
+              <Text>Available sessions</Text>
+              <VStack align="stretch" spacing={5} maxW="600px" w="100%">
+                {selectedSessions.map((session) => (
+                  <SessionCard key={session.id} session={session} />
+                ))}
+              </VStack>
+            </>
           ) : (
             <Text fontSize="xl" mt={5} color="gray.400">
               No session on the selected day
