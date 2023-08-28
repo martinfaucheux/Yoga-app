@@ -22,16 +22,14 @@ const formatHours = (date) => {
   return `${hours}:${minutes}`;
 };
 
-const SessionCard = ({ session }) => {
-  const [isBooked, setIsBooked] = useState(!!session.booking);
-
+const SessionCard = ({ session, fetchSessionData }) => {
+  const isBooked = !!session.booking;
   const bookSession = async () => {
     try {
       await customFetch.post("/api/bookings/", {
         session: session.id,
       });
-      setIsBooked(true);
-      // await fetchSessionData();
+      await fetchSessionData();
     } catch (error) {
       // TODO: do better
       console.log(error);
@@ -41,8 +39,7 @@ const SessionCard = ({ session }) => {
   const cancelBooking = async () => {
     try {
       await customFetch.delete(`/api/bookings/${session.booking}`);
-      setIsBooked(false);
-      // await fetchSessionData();
+      await fetchSessionData();
     } catch (error) {
       // TODO: do better
       console.log(error);
@@ -162,7 +159,11 @@ function CalendarView() {
               <Text>Available sessions</Text>
               <VStack align="stretch" spacing={5} maxW="600px" w="100%">
                 {selectedSessions.map((session) => (
-                  <SessionCard key={session.id} session={session} />
+                  <SessionCard
+                    key={`${session.id}-${session.booking}`}
+                    session={session}
+                    fetchSessionData={fetchSessionData}
+                  />
                 ))}
               </VStack>
             </>
