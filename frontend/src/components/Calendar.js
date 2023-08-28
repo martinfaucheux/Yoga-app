@@ -85,6 +85,8 @@ function CalendarView() {
     }
   };
 
+  const selectedSessions = sessionMap[selectedDate.toDateString()] || [];
+
   return (
     <Flex
       direction={{ base: "column", md: "column", xl: "row" }}
@@ -118,11 +120,17 @@ function CalendarView() {
             </Box>
           </Box>
 
-          <VStack align="stretch" spacing={5} maxW="600px" w="100%">
-            {(sessionMap[selectedDate.toDateString()] || []).map((session) => (
-              <SessionCard id={session.id} session={session} />
-            ))}
-          </VStack>
+          {selectedSessions.length ? (
+            <VStack align="stretch" spacing={5} maxW="600px" w="100%">
+              {selectedSessions.map((session) => (
+                <SessionCard id={session.id} session={session} />
+              ))}
+            </VStack>
+          ) : (
+            <Text fontSize="xl" mt={5} color="gray.400">
+              No session on the selected day
+            </Text>
+          )}
         </VStack>
       </Box>
     </Flex>
