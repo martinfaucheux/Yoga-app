@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import "./Calendar.css";
 import { customFetch } from "../utils/customFetch";
+import SessionDescription from "./SessionDescription";
 
 const formatHours = (date) => {
   const hours = String(date.getHours()).padStart(2, "0");
@@ -91,11 +92,11 @@ function CalendarView() {
       px={{ base: "1", sm: "8" }}
     >
       <Box flex={1}>
-        <DummaySession />
+        <SessionDescription />
       </Box>
       <Box flex={1}>
         <VStack spacing={5}>
-          <Heading>React Calendar</Heading>
+          <Heading>Book your session</Heading>
           <Box
             boxShadow={{ base: "none", sm: "md" }}
             borderRadius={{ base: "none", sm: "md" }}
@@ -139,30 +140,6 @@ const Circle = ({ size, transparent }) => {
         bg={transparent ? "sunset.300" : `rgba(0, 0 0, 0)`}
       />
     </Center>
-  );
-};
-
-const DummaySession = () => {
-  const session = {
-    picture_url:
-      "https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    name: "Yoga class",
-    duration: 60,
-    description: "Some class that is great for you",
-    start_at: Date(2023, 8, 22, 19, 0, 0, 0),
-  };
-
-  return (
-    <Box>
-      <Box p={4}>
-        <Heading size="lg">{session.name}</Heading>
-        <Text mt={2} color="gray.500">
-          {new Date(session.start_at).toLocaleDateString()} | {session.duration}{" "}
-          minutes
-        </Text>
-        <Text mt={4}>{session.description}</Text>
-      </Box>
-    </Box>
   );
 };
 
