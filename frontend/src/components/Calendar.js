@@ -3,28 +3,70 @@ import Calendar from "react-calendar";
 import {
   Box,
   VStack,
-  Image,
   Heading,
   Text,
   Center,
-  Button,
   Flex,
+  Button,
+  Spacer,
 } from "@chakra-ui/react";
 import "./Calendar.css";
 import { customFetch } from "../utils/customFetch";
 
+const formatHours = (date) => {
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+};
+
+const SessionCard = ({ session }) => {
+  return (
+    <Box
+      borderRadius={"xl"}
+      borderColor="gray.200"
+      borderWidth={1}
+      p={4}
+      bg="white"
+    >
+      <Flex direction="row">
+        <Center>
+          <Text ml={2}>
+            Book session at {formatHours(new Date(session.start_at))}
+          </Text>
+        </Center>
+        <Spacer />
+        <Button colorScheme="emerald" px={5}>
+          Book
+        </Button>
+      </Flex>
+    </Box>
+  );
+};
+
 function CalendarView() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [sessionList, setSessionList] = useState([]);
-  const [dateList, setDateList] = useState([]);
+  const [sessionMap, setSessionMap] = useState([]);
 
   const fetchSessionData = async () => {
     try {
       const response = await customFetch.get("/api/sessions/");
-      setSessionList(response.data);
-      setDateList(
-        response.data.map((row) => new Date(row.start_at).toDateString())
-      );
+      let _sessionMap = {};
+
+      // Iterate through the list of objects
+      response.data.forEach((obj) => {
+        // Get the date representation as a string (YYYY-MM-DD)
+        const dateKey = new Date(obj.start_at).toDateString();
+
+        // Check if the dateKey already exists in the dictionary
+        if (_sessionMap[dateKey]) {
+          // If it exists, push the object to the existing list
+          _sessionMap[dateKey].push(obj);
+        } else {
+          // If it doesn't exist, create a new list with the object
+          _sessionMap[dateKey] = [obj];
+        }
+      });
+      setSessionMap(_sessionMap);
     } catch (error) {
       console.error(error);
     }
@@ -34,21 +76,19 @@ function CalendarView() {
     fetchSessionData();
   }, []);
 
-  // console.log(dateList);
-
   const CalendarTile = ({ activeStartDate, date, view }) => {
     if (view === "month") {
       const formattedDate = date.toDateString();
-      const markDate = dateList.includes(formattedDate);
+      const markDate = formattedDate in sessionMap;
       return <Circle size={2} transparent={markDate} />;
     }
   };
 
   return (
     <Flex
-      direction={{ md: "column", xl: "row" }}
+      direction={{ base: "column", md: "column", xl: "row" }}
       py={{ base: "12", md: "24" }}
-      px={{ base: "0", sm: "8" }}
+      px={{ base: "1", sm: "8" }}
     >
       <Box flex={1}>
         <DummaySession />
@@ -77,7 +117,11 @@ function CalendarView() {
             </Box>
           </Box>
 
-          <Text>Selected Date: {selectedDate.toDateString()}</Text>
+          <VStack align="stretch" spacing={5} maxW="600px" w="100%">
+            {(sessionMap[selectedDate.toDateString()] || []).map((session) => (
+              <SessionCard id={session.id} session={session} />
+            ))}
+          </VStack>
         </VStack>
       </Box>
     </Flex>
@@ -99,7 +143,6 @@ const Circle = ({ size, transparent }) => {
 };
 
 const DummaySession = () => {
-  const [isBooked, setIsBooked] = useState(false);
   const session = {
     picture_url:
       "https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
@@ -109,19 +152,8 @@ const DummaySession = () => {
     start_at: Date(2023, 8, 22, 19, 0, 0, 0),
   };
 
-  const bookSession = () => {};
-  const cancelSession = () => {};
-
   return (
     <Box>
-      {/* <Image
-        src={session.picture_url}
-        alt={session.name}
-        maxH="300px"
-        objectFit="cover"
-        borderRadius="lg"
-      /> */}
-
       <Box p={4}>
         <Heading size="lg">{session.name}</Heading>
         <Text mt={2} color="gray.500">
@@ -129,21 +161,6 @@ const DummaySession = () => {
           minutes
         </Text>
         <Text mt={4}>{session.description}</Text>
-
-        {/* {isBooked ? (
-          <>
-            <Text mt={4} color="gray.500">
-              you already booked this session
-            </Text>
-            <Button mt={4} colorScheme="sunset" onClick={cancelSession}>
-              Cancel Booking
-            </Button>
-          </>
-        ) : (
-          <Button mt={4} colorScheme="emerald" onClick={bookSession}>
-            Book
-          </Button>
-        )} */}
       </Box>
     </Box>
   );
