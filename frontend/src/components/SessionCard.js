@@ -8,8 +8,17 @@ import {
   Tooltip,
   Tag,
   Center,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogBody,
+  AlertDialogHeader,
+  AlertDialogCloseButton,
+  AlertDialogContent,
+  AlertDialogFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { customFetch } from "../utils/customFetch";
+import { useRef } from "react";
 
 const defaultTimeformat = (date) => date.toLocaleString();
 
@@ -33,6 +42,50 @@ const BookingStateBadge = ({ booking }) => {
   );
 };
 
+const ConfirmActionModal = ({
+  onClose,
+  isOpen,
+  cancelRef,
+  onConfirm,
+  header,
+  children,
+}) => {
+  return (
+    <>
+      <AlertDialog
+        motionPreset="slideInBottom"
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
+
+        <AlertDialogContent>
+          <AlertDialogHeader>{header}</AlertDialogHeader>
+          <AlertDialogCloseButton />
+          <AlertDialogBody>{children}</AlertDialogBody>
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onClose}>
+              No
+            </Button>
+            <Button
+              colorScheme="sunset"
+              ml={3}
+              onClick={() => {
+                onConfirm();
+                onClose();
+              }}
+            >
+              Yes
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
+
 const SessionCard = ({
   session,
   booking,
@@ -40,6 +93,9 @@ const SessionCard = ({
   showBookText = false,
   formatDate = defaultTimeformat,
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+
   const bookSession = async () => {
     try {
       await customFetch.post("/api/bookings/", {
@@ -83,15 +139,34 @@ const SessionCard = ({
         <BookingStateBadge booking={booking} />
 
         {!!booking ? (
-          <Button colorScheme="sunset" px={5} onClick={cancelBooking}>
+          <Button colorScheme="sunset" px={5} onClick={onOpen}>
             Cancel booking
           </Button>
         ) : (
-          <Button colorScheme="emerald" px={5} onClick={bookSession}>
+          <Button colorScheme="emerald" px={5} onClick={onOpen}>
             Book Now!
           </Button>
         )}
       </Flex>
+      <ConfirmActionModal
+        onClose={onClose}
+        isOpen={isOpen}
+        cancelRef={cancelRef}
+        onConfirm={!!booking ? cancelBooking : bookSession}
+        header={!!booking ? "Cancel you booking" : "Confirm you booking"}
+      >
+        {!!booking ? (
+          <Text>Are you sure you want to cancel your booking?</Text>
+        ) : (
+          <Text>
+            Do you want to book this session? An email will be sent to your
+            address once your booking is confirmed.
+          </Text>
+        )}
+        <Text mt="2">
+          Session: {new Date(session.start_at).toLocaleDateString()}
+        </Text>
+      </ConfirmActionModal>
     </Box>
   );
 };
