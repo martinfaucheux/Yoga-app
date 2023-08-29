@@ -2,19 +2,18 @@ from django.db import transaction
 from django.utils import timezone
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.settings import api_settings
 from rest_framework.viewsets import GenericViewSet
 from user.constants import TokenTypes
 from user.models import Token, User
 from user.serializers import (
-    RequestResetPaswordSerializer,
     ResetPasswordSerializer,
+    SimpleEmailSerializer,
     TokenSerializer,
     UserSerializer,
 )
-from user.services.user import send_reset_password_email
+from user.services.user import send_reset_password_email, send_verification_email
 from utils import log
 
 
@@ -30,7 +29,7 @@ class UserViewSet(
     @action(
         detail=False,
         methods=["get"],
-        permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES,
+        permission_classes=[IsAuthenticated],
         serializer_class=UserSerializer,
     )
     def me(self, request):
@@ -64,9 +63,12 @@ class UserViewSet(
 
         return Response({"status": "ok"})
 
-    @action(
-        detail=False, methods=["post"], serializer_class=RequestResetPaswordSerializer
-    )
+    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
+    def request_email_verification(self, request):
+        send_verification_email(self.request.user)
+        return Response({"status": "ok"})
+
+    @action(detail=False, methods=["post"], serializer_class=SimpleEmailSerializer)
     def request_reset_password(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

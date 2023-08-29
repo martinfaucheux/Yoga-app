@@ -17,8 +17,6 @@ import { useAuth } from "../utils/AuthService";
 import { useNavigate, useLocation, Link as RouterLink } from "react-router-dom";
 import { PasswordField } from "./PasswordField";
 
-const NON_VERIFIED_MESSAGE = "The user is not verified";
-
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,12 +33,7 @@ const LoginPage = () => {
       let message = "An unexpected error happened";
       console.log(error);
       if (error.response.status === 401) {
-        message = "Login failed";
-      } else if (
-        error.response.status === 403 &&
-        error.response.data.details[0] === NON_VERIFIED_MESSAGE
-      ) {
-        message = NON_VERIFIED_MESSAGE;
+        message = "Wrong email or password";
       }
       setErrorMessage(message);
     }
@@ -69,7 +62,7 @@ const LoginPage = () => {
     <Container
       maxW="lg"
       py={{ base: "12", md: "24" }}
-      px={{ base: "0", sm: "8" }}
+      px={{ base: "1", sm: "8" }}
     >
       <Stack spacing="8">
         <Stack spacing="6">

@@ -6,8 +6,8 @@ from user.services.user import create_user
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "email", "first_name", "last_name", "password")
-        read_only_fields = ("id",)
+        fields = ("id", "email", "first_name", "last_name", "password", "is_verified")
+        read_only_fields = ("id", "is_verified")
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class RequestResetPaswordSerializer(serializers.Serializer):
+class SimpleEmailSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
 

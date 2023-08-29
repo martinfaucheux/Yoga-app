@@ -10,15 +10,15 @@ export const UserDataProvider = ({ children }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchUserData();
+      updateUserData();
     } else {
       setUserData(null);
     }
   }, [isAuthenticated]);
 
-  const fetchUserData = async () => {
+  const updateUserData = async () => {
     try {
-      const response = await customFetch.get("/api/users/me");
+      const response = await customFetch.get("/api/users/me/");
       setUserData(response.data);
     } catch (error) {
       console.log(error);
@@ -26,7 +26,7 @@ export const UserDataProvider = ({ children }) => {
   };
 
   return (
-    <UserDataContext.Provider value={userData}>
+    <UserDataContext.Provider value={{ userData, updateUserData }}>
       {children}
     </UserDataContext.Provider>
   );

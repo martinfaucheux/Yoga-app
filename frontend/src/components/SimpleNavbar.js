@@ -51,7 +51,7 @@ const NavLink = (props) => {
 const CornerMenu = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const userData = useUserData();
+  const { userData } = useUserData();
 
   const userName = userData
     ? `${userData.first_name} ${userData.last_name}`

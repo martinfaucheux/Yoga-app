@@ -13,6 +13,7 @@ import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
 import { useAuth } from "./utils/AuthService";
+import { useUserData } from "./utils/UserDataService";
 import { Fonts } from "./utils/Fonts";
 import CalendarView from "./components/Calendar";
 
@@ -22,6 +23,7 @@ import {
   Navigate,
   Route,
 } from "react-router-dom";
+import EmailVerificationRequest from "./components/EmailVerificationRequest";
 
 // Create a custom theme and set the font family
 const theme = extendTheme({
@@ -73,6 +75,8 @@ function App() {
 
 const MainContent = () => {
   const { isAuthenticated } = useAuth();
+  const { userData } = useUserData();
+  const isVerified = userData !== null ? userData.is_verified : null;
 
   return (
     <Routes>
@@ -87,10 +91,7 @@ const MainContent = () => {
         path="/register"
         element={isAuthenticated ? <Navigate to="/" /> : <RegistrationForm />}
       />
-      <Route
-        path="/verify"
-        element={isAuthenticated ? <Navigate to="/" /> : <EmailVerification />}
-      />
+
       <Route
         path="/request-reset-password"
         element={
@@ -101,10 +102,14 @@ const MainContent = () => {
         path="/reset-password"
         element={isAuthenticated ? <Navigate to="/" /> : <ResetPassword />}
       />
+
+      <Route path="/verify" element={<EmailVerification />} />
+      <Route path="/verify-request" element={<EmailVerificationRequest />} />
+
+      {/* TODO: change this route */}
       <Route path="/calendar" element={<CalendarView />} />
 
       <Route exact path="/sessions" element={<PrivateRoute />}>
-        <Route exact path="/sessions" element={<SessionCardBoard />} />
         <Route path="/sessions" element={<SessionCardBoard />} />
         <Route path="/sessions/:sessionId" element={<SessionDetailPage />} />
       </Route>

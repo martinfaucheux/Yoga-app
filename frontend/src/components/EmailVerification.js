@@ -10,16 +10,21 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { customFetch } from "../utils/customFetch";
 import { Link } from "react-router-dom";
+import { useUserData } from "../utils/UserDataService";
+import { useAuth } from "../utils/AuthService";
 
 const EmailVerification = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [isVerified, setIsVerified] = useState(false);
+  const { updateUserData } = useUserData();
+  const { isAuthenticated } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
 
   const verifyToken = async () => {
     const token = searchParams.get("token");
     try {
       await customFetch.post("/api/users/verify/", { token: token });
+      updateUserData();
       setIsVerified(true);
     } catch (error) {
       setErrorMessage("Invalid verification token");
@@ -44,9 +49,20 @@ const EmailVerification = () => {
       {isVerified ? (
         <>
           Your email is verified, you can now{" "}
-          <Button colorScheme="emerald" variant="link" as={Link} to="/login">
-            login
-          </Button>
+          {isAuthenticated ? (
+            <Button
+              colorScheme="emerald"
+              variant="link"
+              as={Link}
+              to="/sessions"
+            >
+              view available sessions
+            </Button>
+          ) : (
+            <Button colorScheme="emerald" variant="link" as={Link} to="/login">
+              login
+            </Button>
+          )}
         </>
       ) : (
         "Verifying"
@@ -58,7 +74,7 @@ const EmailVerification = () => {
     <Container
       maxW="lg"
       py={{ base: "12", md: "24" }}
-      px={{ base: "0", sm: "8" }}
+      px={{ base: "1", sm: "8" }}
     >
       <Heading mt={5}>Verify your email</Heading>
 

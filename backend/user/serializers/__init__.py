@@ -1,9 +1,9 @@
 from .token import TokenSerializer
-from .user import RequestResetPaswordSerializer, ResetPasswordSerializer, UserSerializer
+from .user import ResetPasswordSerializer, SimpleEmailSerializer, UserSerializer
 
 __all__ = (
     UserSerializer,
     TokenSerializer,
-    RequestResetPaswordSerializer,
+    SimpleEmailSerializer,
     ResetPasswordSerializer,
 )

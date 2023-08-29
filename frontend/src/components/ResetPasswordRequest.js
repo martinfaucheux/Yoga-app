@@ -59,7 +59,7 @@ const RestPasswordForm = ({ setSuccesfullySubmitted }) => {
         <FormErrorMessage>This is not a valid email</FormErrorMessage>
       </FormControl>
       <Button colorScheme="emerald" onClick={handleSubmit}>
-        Send reset link
+        Send reset email
       </Button>
       {!!apiError ? (
         <Alert status="error" borderRadius={"md"}>
@@ -78,7 +78,7 @@ const ResetPasswordRequest = () => {
     <Container
       maxW="lg"
       py={{ base: "12", md: "24" }}
-      px={{ base: "0", sm: "8" }}
+      px={{ base: "1", sm: "8" }}
     >
       <Stack spacing={5}>
         <Heading>Reset your password</Heading>

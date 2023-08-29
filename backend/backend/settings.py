@@ -131,7 +131,6 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "USER_AUTHENTICATION_RULE": "user.services.token.verified_authentication_rule",
 }
 
 AUTH_USER_MODEL = "user.User"
