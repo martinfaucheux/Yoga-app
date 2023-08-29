@@ -1,48 +1,8 @@
-import {
-  Container,
-  Heading,
-  Flex,
-  Text,
-  Button,
-  Spacer,
-  Box,
-  Center,
-  VStack,
-} from "@chakra-ui/react";
+import { Container, Heading, Text, Button, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { customFetch } from "../utils/customFetch";
 import { Link } from "react-router-dom";
-
-const SessionCard = ({ session, booking, refreshList }) => {
-  const cancelBooking = async () => {
-    try {
-      await customFetch.delete(`/api/bookings/${booking.id}`);
-      await refreshList();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return (
-    <Box
-      borderRadius={"xl"}
-      borderColor="gray.200"
-      borderWidth={1}
-      p={4}
-      bg="white"
-    >
-      <Flex direction="row" spacing={2}>
-        <Center>
-          <Text>{new Date(session.start_at).toLocaleString()}</Text>
-        </Center>
-        <Spacer />
-        <Button colorScheme="sunset" px={5} onClick={cancelBooking}>
-          Cancel booking
-        </Button>
-      </Flex>
-    </Box>
-  );
-};
+import SessionCard from "./SessionCard";
 
 const BookingList = () => {
   const [sessionList, setSessionList] = useState([]);

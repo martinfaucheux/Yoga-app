@@ -1,8 +1,8 @@
 import { Heading, Text, Box, Image, Button } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { customFetch } from "../utils/customFetch";
+import { customFetch } from "../../utils/customFetch";
 import React, { useState, useEffect } from "react";
-import PageContainer from "./PageContainer";
+import PageContainer from "../PageContainer";
 
 const SessionDetailPage = () => {
   const { sessionId } = useParams();

@@ -1,7 +1,5 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import SessionCardBoard from "./components/SessionCardBoard";
 import SimpleNavbar from "./components/SimpleNavbar";
-import SessionDetailPage from "./components/SessionDetailPage";
 import BlogPage from "./components/BlogPage";
 import AboutPage from "./components/AboutPage";
 import LoginPage from "./components/LoginPage";

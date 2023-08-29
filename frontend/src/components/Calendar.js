@@ -8,75 +8,12 @@ import {
   Center,
   Flex,
   Button,
-  Spacer,
-  HStack,
 } from "@chakra-ui/react";
 import "./Calendar.css";
 import { customFetch } from "../utils/customFetch";
 import SessionDescription from "./SessionDescription";
 import { Link } from "react-router-dom";
-
-const formatHours = (date) => {
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  return `${hours}:${minutes}`;
-};
-
-const SessionCard = ({ session, bookingId, updateBookings }) => {
-  const isBooked = !!bookingId;
-  const bookSession = async () => {
-    try {
-      await customFetch.post("/api/bookings/", {
-        session: session.id,
-      });
-      await updateBookings();
-    } catch (error) {
-      // TODO: do better
-      console.log(error);
-    }
-  };
-
-  const cancelBooking = async () => {
-    try {
-      await customFetch.delete(`/api/bookings/${bookingId}`);
-      await updateBookings();
-    } catch (error) {
-      // TODO: do better
-      console.log(error);
-    }
-  };
-
-  return (
-    <Box
-      borderRadius={"xl"}
-      borderColor="gray.200"
-      borderWidth={1}
-      p={4}
-      bg="white"
-    >
-      <Flex direction="row" spacing={2}>
-        <Center>
-          <HStack ml={2} spacing={4}>
-            <Text>Session at {formatHours(new Date(session.start_at))}</Text>
-            {isBooked ? (
-              <Text color="gray.400">You already booked this session</Text>
-            ) : null}
-          </HStack>
-        </Center>
-        <Spacer />
-        {isBooked ? (
-          <Button colorScheme="sunset" px={5} onClick={cancelBooking}>
-            Cancel booking
-          </Button>
-        ) : (
-          <Button colorScheme="emerald" px={5} onClick={bookSession}>
-            Book Now!
-          </Button>
-        )}
-      </Flex>
-    </Box>
-  );
-};
+import SessionCard from "./SessionCard";
 
 function CalendarView() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -167,13 +104,15 @@ function CalendarView() {
               <Text>Available sessions</Text>
               <VStack align="stretch" spacing={5} maxW="600px" w="100%">
                 {selectedSessions.map((session) => {
-                  const bookingId = bookingMap[session.id]?.id;
+                  const booking = bookingMap[session.id];
                   return (
                     <SessionCard
-                      key={`${session.id}-${bookingId}`}
+                      key={`${session.id}-${booking?.id}`}
                       session={session}
-                      bookingId={bookingId}
-                      updateBookings={fetchBookingData}
+                      booking={booking}
+                      refreshList={fetchBookingData}
+                      showBookText={true}
+                      formatDate={(date) => date.toLocaleTimeString()}
                     />
                   );
                 })}

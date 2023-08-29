@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { customFetch } from "../utils/customFetch";
+import { customFetch } from "../../utils/customFetch";
 import { TimeIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
