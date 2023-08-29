@@ -74,8 +74,7 @@ const CornerMenu = () => {
         <Avatar size={"md"} name={userName} bg="white" color="black" />
       </MenuButton>
       <MenuList>
-        <MenuItem>Link 1</MenuItem>
-        <MenuItem>Link 2</MenuItem>
+        <MenuItem onClick={() => navigate("/bookings")}>My bookings</MenuItem>
         <MenuDivider />
         {isAuthenticated ? (
           <MenuItem onClick={logoutAndRedirect}>Logout</MenuItem>

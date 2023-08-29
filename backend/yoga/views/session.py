@@ -10,5 +10,7 @@ class SessionViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         booking_query = Booking.objects.filter(
             user=self.request.user, session_id=OuterRef("id")
-        ).values("id")[:1]
-        return Session.objects.annotate(booking=booking_query)
+        )
+        return Session.objects.annotate(
+            booking=Subquery(booking_query.values("id")[:1])
+        )

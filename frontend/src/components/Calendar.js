@@ -10,11 +10,11 @@ import {
   Button,
   Spacer,
   HStack,
-  Divider,
 } from "@chakra-ui/react";
 import "./Calendar.css";
 import { customFetch } from "../utils/customFetch";
 import SessionDescription from "./SessionDescription";
+import { Link } from "react-router-dom";
 
 const formatHours = (date) => {
   const hours = String(date.getHours()).padStart(2, "0");
@@ -172,6 +172,18 @@ function CalendarView() {
               No session on the selected day
             </Text>
           )}
+          <Text>
+            You can see your booking list
+            <Button
+              colorScheme="emerald"
+              variant="link"
+              as={Link}
+              to="/bookings"
+            >
+              here
+            </Button>
+            .
+          </Text>
         </VStack>
       </Box>
     </Flex>

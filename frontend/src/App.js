@@ -13,10 +13,9 @@ import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
 import { useAuth } from "./utils/AuthService";
-import { useUserData } from "./utils/UserDataService";
 import { Fonts } from "./utils/Fonts";
 import CalendarView from "./components/Calendar";
-
+import BookingList from "./components/BookingList";
 import {
   BrowserRouter as Router,
   Routes,
@@ -104,8 +103,12 @@ const MainContent = () => {
       <Route path="/verify" element={<EmailVerification />} />
       <Route path="/verify-request" element={<EmailVerificationRequest />} />
 
+      {/* private routes */}
       <Route exact path="/sessions" element={<PrivateRoute />}>
         <Route path="/sessions" element={<CalendarView />} />
+      </Route>
+      <Route exact path="/bookings" element={<PrivateRoute />}>
+        <Route path="/bookings" element={<BookingList />} />
       </Route>
 
       <Route path="/blog" element={<BlogPage />} />
