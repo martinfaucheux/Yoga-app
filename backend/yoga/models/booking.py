@@ -9,6 +9,7 @@ class Booking(BaseModel):
     session = models.ForeignKey(
         "yoga.Session", related_name="bookings", on_delete=models.CASCADE
     )
+    is_confirmed = models.BooleanField(default=False)
 
     class Meta:
         unique_together = [["user", "session"]]

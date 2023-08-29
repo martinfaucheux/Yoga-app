@@ -22,14 +22,14 @@ const formatHours = (date) => {
   return `${hours}:${minutes}`;
 };
 
-const SessionCard = ({ session, fetchSessionData }) => {
-  const isBooked = !!session.booking;
+const SessionCard = ({ session, bookingId, updateBookings }) => {
+  const isBooked = !!bookingId;
   const bookSession = async () => {
     try {
       await customFetch.post("/api/bookings/", {
         session: session.id,
       });
-      await fetchSessionData();
+      await updateBookings();
     } catch (error) {
       // TODO: do better
       console.log(error);
@@ -38,8 +38,8 @@ const SessionCard = ({ session, fetchSessionData }) => {
 
   const cancelBooking = async () => {
     try {
-      await customFetch.delete(`/api/bookings/${session.booking}`);
-      await fetchSessionData();
+      await customFetch.delete(`/api/bookings/${bookingId}`);
+      await updateBookings();
     } catch (error) {
       // TODO: do better
       console.log(error);
@@ -80,24 +80,18 @@ const SessionCard = ({ session, fetchSessionData }) => {
 
 function CalendarView() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [sessionMap, setSessionMap] = useState([]);
+  const [sessionMap, setSessionMap] = useState({});
+  const [bookingMap, setBookingMap] = useState({});
 
   const fetchSessionData = async () => {
     try {
       const response = await customFetch.get("/api/sessions/");
       let _sessionMap = {};
-
-      // Iterate through the list of objects
       response.data.forEach((obj) => {
-        // Get the date representation as a string (YYYY-MM-DD)
         const dateKey = new Date(obj.start_at).toDateString();
-
-        // Check if the dateKey already exists in the dictionary
         if (_sessionMap[dateKey]) {
-          // If it exists, push the object to the existing list
           _sessionMap[dateKey].push(obj);
         } else {
-          // If it doesn't exist, create a new list with the object
           _sessionMap[dateKey] = [obj];
         }
       });
@@ -107,8 +101,22 @@ function CalendarView() {
     }
   };
 
+  const fetchBookingData = async () => {
+    try {
+      const response = await customFetch.get("/api/bookings/");
+      let _bookingMap = {};
+      response.data.forEach((obj) => {
+        _bookingMap[obj.session] = obj;
+      });
+      setBookingMap(_bookingMap);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchSessionData();
+    fetchBookingData();
   }, []);
 
   const CalendarTile = ({ activeStartDate, date, view }) => {
@@ -158,13 +166,17 @@ function CalendarView() {
             <>
               <Text>Available sessions</Text>
               <VStack align="stretch" spacing={5} maxW="600px" w="100%">
-                {selectedSessions.map((session) => (
-                  <SessionCard
-                    key={`${session.id}-${session.booking}`}
-                    session={session}
-                    fetchSessionData={fetchSessionData}
-                  />
-                ))}
+                {selectedSessions.map((session) => {
+                  const bookingId = bookingMap[session.id]?.id;
+                  return (
+                    <SessionCard
+                      key={`${session.id}-${bookingId}`}
+                      session={session}
+                      bookingId={bookingId}
+                      updateBookings={fetchBookingData}
+                    />
+                  );
+                })}
               </VStack>
             </>
           ) : (

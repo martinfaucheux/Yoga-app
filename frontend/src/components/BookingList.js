@@ -13,10 +13,10 @@ import { useState, useEffect } from "react";
 import { customFetch } from "../utils/customFetch";
 import { Link } from "react-router-dom";
 
-const SessionCard = ({ session, refreshList }) => {
+const SessionCard = ({ session, booking, refreshList }) => {
   const cancelBooking = async () => {
     try {
-      await customFetch.delete(`/api/bookings/${session.booking}`);
+      await customFetch.delete(`/api/bookings/${booking.id}`);
       await refreshList();
     } catch (error) {
       console.log(error);
@@ -46,17 +46,33 @@ const SessionCard = ({ session, refreshList }) => {
 
 const BookingList = () => {
   const [sessionList, setSessionList] = useState([]);
+  const [bookingList, setBookingList] = useState([]);
 
-  const fetchBookings = async () => {
+  const sessionMap = sessionList.reduce((acc, obj) => {
+    acc[obj.id] = obj;
+    return acc;
+  }, {});
+
+  const fetchSessions = async () => {
     try {
-      const response = await customFetch.get("/api/bookings/me/");
+      const response = await customFetch.get("/api/sessions/");
       setSessionList(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const fetchBookings = async () => {
+    try {
+      const response = await customFetch.get("/api/bookings/");
+      setBookingList(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    fetchSessions();
     fetchBookings();
   }, []);
 
@@ -75,15 +91,19 @@ const BookingList = () => {
           </Button>
           .
         </Text>
-        {sessionList.length ? (
+        {bookingList.length ? (
           <>
-            {sessionList.map((session) => (
-              <SessionCard
-                key={session.booking}
-                session={session}
-                refreshList={fetchBookings}
-              />
-            ))}
+            {bookingList.map((booking) => {
+              const session = sessionMap[booking.session];
+              return !!session ? (
+                <SessionCard
+                  key={booking.id}
+                  session={session}
+                  booking={booking}
+                  refreshList={fetchBookings}
+                />
+              ) : null;
+            })}
           </>
         ) : (
           <Text color="gray.400">You haven't booked any session yet.</Text>

@@ -17,16 +17,3 @@ class BookingViewSet(
         return Booking.objects.filter(user=self.request.user).order_by(
             "session__start_at"
         )
-
-    @action(detail=False, methods=["get"])
-    def me(self, request):
-        booking_qs = self.filter_queryset(
-            Booking.objects.filter(user=self.request.user, session_id=OuterRef("id"))
-        )
-        session_qs = Session.objects.annotate(
-            booking=Subquery(booking_qs.values("id")[:1]),
-            # started_at__gte=timezone.now(),
-        ).filter(booking__isnull=False)
-
-        serializer = SessionSerializer(session_qs, many=True)
-        return Response(serializer.data)
