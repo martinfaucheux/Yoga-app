@@ -76,8 +76,6 @@ function App() {
 const MainContent = () => {
   const { isAuthenticated } = useAuth();
   const { userData } = useUserData();
-  const isVerified = userData !== null ? userData.is_verified : null;
-
   return (
     <Routes>
       <Route path="*" element={<NotFound />} />
@@ -106,12 +104,8 @@ const MainContent = () => {
       <Route path="/verify" element={<EmailVerification />} />
       <Route path="/verify-request" element={<EmailVerificationRequest />} />
 
-      {/* TODO: change this route */}
-      <Route path="/calendar" element={<CalendarView />} />
-
       <Route exact path="/sessions" element={<PrivateRoute />}>
-        <Route path="/sessions" element={<SessionCardBoard />} />
-        <Route path="/sessions/:sessionId" element={<SessionDetailPage />} />
+        <Route path="/sessions" element={<CalendarView />} />
       </Route>
 
       <Route path="/blog" element={<BlogPage />} />
