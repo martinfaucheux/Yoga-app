@@ -6,7 +6,7 @@ const UserDataContext = createContext();
 
 export const UserDataProvider = ({ children }) => {
   const { isAuthenticated } = useAuth();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({ is_verified: true });
 
   useEffect(() => {
     if (isAuthenticated) {

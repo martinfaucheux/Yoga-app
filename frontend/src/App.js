@@ -75,7 +75,7 @@ function App() {
 
 const MainContent = () => {
   const { isAuthenticated } = useAuth();
-  const { userData } = useUserData();
+
   return (
     <Routes>
       <Route path="*" element={<NotFound />} />
