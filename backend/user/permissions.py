@@ -12,3 +12,14 @@ class IsVerified(IsAuthenticated):
 
     def has_permission(self, request: Request, view: View) -> bool:
         return request.user.is_verified
+
+
+class isTeacher(IsAuthenticated):
+    """
+    Allow only teacher users
+    """
+
+    message = "this action is reserved for teacher users"
+
+    def has_permission(self, request: Request, view: View) -> bool:
+        return request.user.is_teacher

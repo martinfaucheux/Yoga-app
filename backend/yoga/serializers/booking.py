@@ -11,3 +11,9 @@ class BookingSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         attrs["user"] = self.context["request"].user
         return super().validate(attrs)
+
+
+class BookingStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ["status"]

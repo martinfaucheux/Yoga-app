@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Yogine Account Verification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: #a2eac3;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        font-family: "Dancing Script", cursive;
+        font-size: 40px;
+      }
+      .content {
+        padding: 20px;
+      }
+      .btn {
+        display: inline-block;
+        background-color: #a2eac3;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        margin-top: 20px;
+      }
+      .signature {
+        font-family: "Dancing Script", cursive;
+        font-size: 30px;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div
+      class="container"
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <div
+        class="header"
+        style="
+          background-color: #a2eac3;
+          color: #ffffff;
+          text-align: center;
+          padding: 10px;
+          border-radius: 10px;
+          font-family: 'Dancing Script', cursive;
+          font-size: 40px;
+        "
+      >
+        <h1>Yogine</h1>
+      </div>
+      <div class="content" style="padding: 20px">
+        <p>Hello {{ first_name }},</p>
+        <p>
+          Unfortunately, there is no more slots for the session you booked
+          on {{session_date}}.
+          You can find other available slots <a href="{{ url }}"
+          style="color: #30bb8a; font-weight: bold;"
+          >here</p>
+        <p>Best regards,</p>
+        <p
+          class="signature"
+          style="font-family: 'Dancing Script', cursive; font-size: 30px"
+        >
+          Yogine Team
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

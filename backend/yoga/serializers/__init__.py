@@ -1,5 +1,4 @@
+from .booking import BookingSerializer, BookingStatusSerializer
 from .session import SessionSerializer
 
-from .booking import BookingSerializer
-
-__all__ = (SessionSerializer, BookingSerializer)
+__all__ = (SessionSerializer, BookingSerializer, BookingStatusSerializer)
