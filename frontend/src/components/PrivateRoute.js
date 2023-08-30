@@ -1,15 +1,13 @@
 import React from "react";
 import { useAuth } from "../utils/AuthService";
-import { useUserData } from "../utils/UserDataService";
 import { Navigate, Outlet } from "react-router-dom";
 
 const LOGIN_ROUTE = "/login";
 const VERIFY_REQUEST_ROUTE = "/verify-request";
 
 const PrivateRoute = () => {
-  const { isAuthenticated } = useAuth();
-  const { userData } = useUserData();
-  const isVerified = userData !== null ? userData.is_verified : null;
+  const { isAuthenticated, userData } = useAuth();
+  const isVerified = userData?.is_verified;
 
   if (isAuthenticated) {
     if (!isVerified) {

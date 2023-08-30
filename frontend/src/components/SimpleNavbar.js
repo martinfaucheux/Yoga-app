@@ -18,7 +18,6 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthService";
-import { useUserData } from "../utils/UserDataService";
 
 const Links = [
   { name: "Book", to: "/sessions" },
@@ -49,9 +48,8 @@ const NavLink = (props) => {
 };
 
 const CornerMenu = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, userData } = useAuth();
   const navigate = useNavigate();
-  const { userData } = useUserData();
 
   const userName = userData
     ? `${userData.first_name} ${userData.last_name}`

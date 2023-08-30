@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 
 const ACCESS_TOKEN_KEY = "jwtToken";
 const REFRESH_TOKEN_KEY = "jwtRefreshToken";
+const USER_DATA_KEY = "userData";
 
 const AuthContext = createContext();
 export const useAuth = () => {
@@ -11,6 +12,7 @@ export const useAuth = () => {
 
 export const AuthService = {
   getLocalToken: () => localStorage.getItem(ACCESS_TOKEN_KEY),
+  getLocalUserData: () => JSON.parse(localStorage.getItem(USER_DATA_KEY)),
 
   fetchToken: async (email, password) => {
     const response = await axios.post("/api/token/", {
@@ -22,7 +24,6 @@ export const AuthService = {
     return response.data;
   },
   refreshToken: async () => {
-    console.log("refresh access token");
     const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
     const response = await axios.post("/api/token/refresh/", {
       refresh: refreshToken,
@@ -36,26 +37,36 @@ export const AuthService = {
     const token = localStorage.getItem(ACCESS_TOKEN_KEY);
     return !!token;
   },
+  fetchUserData: async (token) => {
+    const response = await axios.get("/api/users/me/", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    localStorage.setItem(USER_DATA_KEY, JSON.stringify(response.data));
+    return response.data;
+  },
 };
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     AuthService.hasToken()
   );
+  const [userData, setUserData] = useState(AuthService.getLocalUserData());
 
   const login = async (email, password) => {
-    const response = await AuthService.fetchToken(email, password);
+    await AuthService.fetchToken(email, password);
     setIsAuthenticated(true);
-    return response;
+    await AuthService.fetchUserData(AuthService.getLocalToken());
+    setUserData(AuthService.getLocalUserData());
   };
 
   const logout = () => {
     AuthService.removeToken();
     setIsAuthenticated(false);
+    setUserData(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userData, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
