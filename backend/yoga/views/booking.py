@@ -1,11 +1,8 @@
-from django.db.models import OuterRef, Subquery
-from django.utils import timezone
 from rest_framework.decorators import action
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
-from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from yoga.models import Booking, Session
-from yoga.serializers import BookingSerializer, SessionSerializer
+from yoga.models import Booking
+from yoga.serializers import BookingSerializer
 
 
 class BookingViewSet(

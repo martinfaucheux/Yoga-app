@@ -24,23 +24,40 @@ import { useRef } from "react";
 const defaultTimeformat = (date) => date.toLocaleString();
 
 const BookingStateBadge = ({ booking }) => {
+  const toast = useErrorToast();
   if (!booking) {
     return null;
   }
   const tagProps = { size: "lg", mx: "5" };
-  return booking.is_confirmed ? (
-    <Tooltip label="Your booking has been confirmed by the teacher">
-      <Tag colorScheme="emerald" {...tagProps}>
-        Confirmed
-      </Tag>
-    </Tooltip>
-  ) : (
-    <Tooltip label="Your booking is not yet confirmed. Check your emails for update">
-      <Tag colorScheme="blue" {...tagProps}>
-        <Text>Pending</Text>
-      </Tag>
-    </Tooltip>
-  );
+  switch (booking.status) {
+    case "confirmed":
+      return (
+        <Tooltip label="Your booking has been confirmed by the teacher">
+          <Tag colorScheme="emerald" {...tagProps}>
+            Confirmed
+          </Tag>
+        </Tooltip>
+      );
+    case "pending":
+      return (
+        <Tooltip label="Your booking is not yet confirmed. Check your emails for update">
+          <Tag colorScheme="blue" {...tagProps}>
+            <Text>Pending</Text>
+          </Tag>
+        </Tooltip>
+      );
+    case "canceled":
+      return (
+        <Tooltip label="There are no slot available so your booking has been canceled.">
+          <Tag colorScheme="sunset" {...tagProps}>
+            <Text>Canceled</Text>
+          </Tag>
+        </Tooltip>
+      );
+    default:
+      toast();
+      break;
+  }
 };
 
 const ConfirmActionModal = ({
@@ -139,7 +156,12 @@ const SessionCard = ({
         <BookingStateBadge booking={booking} />
 
         {!!booking ? (
-          <Button colorScheme="sunset" px={5} onClick={onOpen}>
+          <Button
+            colorScheme="sunset"
+            px={5}
+            onClick={onOpen}
+            isDisabled={booking.status === "canceled"}
+          >
             Cancel booking
           </Button>
         ) : (

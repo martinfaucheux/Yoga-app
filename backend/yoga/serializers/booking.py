@@ -5,8 +5,8 @@ from yoga.models import Booking
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ["id", "session", "is_confirmed"]
-        read_only_fields = ["is_confirmed"]
+        fields = ["id", "session", "status"]
+        read_only_fields = ["status"]
 
     def validate(self, attrs):
         attrs["user"] = self.context["request"].user
