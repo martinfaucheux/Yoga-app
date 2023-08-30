@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { customFetch } from "../utils/customFetch";
 import { Link } from "react-router-dom";
 import SessionCard from "./SessionCard";
+import { useErrorToast } from "./Toast";
 
 const BookingList = () => {
   const [sessionList, setSessionList] = useState([]);
   const [bookingList, setBookingList] = useState([]);
+  const toast = useErrorToast();
 
   const sessionMap = sessionList.reduce((acc, obj) => {
     acc[obj.id] = obj;
@@ -18,7 +20,7 @@ const BookingList = () => {
       const response = await customFetch.get("/api/sessions/");
       setSessionList(response.data);
     } catch (error) {
-      console.log(error);
+      toast();
     }
   };
 
@@ -27,7 +29,7 @@ const BookingList = () => {
       const response = await customFetch.get("/api/bookings/");
       setBookingList(response.data);
     } catch (error) {
-      console.log(error);
+      toast();
     }
   };
 

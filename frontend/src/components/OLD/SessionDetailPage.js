@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import { customFetch } from "../../utils/customFetch";
 import React, { useState, useEffect } from "react";
 import PageContainer from "../PageContainer";
+import { useErrorToast } from "../Toast";
 
 const SessionDetailPage = () => {
   const { sessionId } = useParams();
   const [session, setSession] = useState({});
   const [isBooked, setIsBooked] = useState(false);
+  const toast = useErrorToast();
 
   const fetchSessionData = async () => {
     try {
@@ -15,7 +17,7 @@ const SessionDetailPage = () => {
       setSession(response.data);
       setIsBooked(!!response.data.booking);
     } catch (error) {
-      console.log(error);
+      toast();
     }
   };
 
@@ -26,7 +28,7 @@ const SessionDetailPage = () => {
       });
       await fetchSessionData();
     } catch (error) {
-      console.log(error);
+      toast();
     }
   };
 
@@ -35,7 +37,7 @@ const SessionDetailPage = () => {
       await customFetch.delete(`/api/bookings/${session.booking}`);
       await fetchSessionData();
     } catch (error) {
-      console.log(error);
+      toast();
     }
   };
 

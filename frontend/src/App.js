@@ -56,10 +56,14 @@ const theme = extendTheme({
     },
   },
 });
+const toastOptions = {
+  defaultOptions: { position: "bottom-left" },
+  toastSpacing: "4rem",
+};
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme} toastOptions={toastOptions}>
       <Fonts />
       <Router>
         <SimpleNavbar />

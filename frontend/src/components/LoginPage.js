@@ -16,6 +16,7 @@ import {
 import { useAuth } from "../utils/AuthService";
 import { useNavigate, useLocation, Link as RouterLink } from "react-router-dom";
 import { PasswordField } from "./PasswordField";
+import { useErrorToast } from "./Toast";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useErrorToast();
 
   const handleLogin = async () => {
     try {
@@ -31,9 +33,10 @@ const LoginPage = () => {
       return navigate("/sessions");
     } catch (error) {
       let message = "An unexpected error happened";
-      console.log(error);
       if (error.response.status === 401) {
         message = "Wrong email or password";
+      } else {
+        toast();
       }
       setErrorMessage(message);
     }

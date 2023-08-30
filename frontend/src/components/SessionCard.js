@@ -18,6 +18,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { customFetch } from "../utils/customFetch";
+import { useErrorToast } from "./Toast";
 import { useRef } from "react";
 
 const defaultTimeformat = (date) => date.toLocaleString();
@@ -95,6 +96,7 @@ const SessionCard = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+  const toast = useErrorToast();
 
   const bookSession = async () => {
     try {
@@ -103,8 +105,7 @@ const SessionCard = ({
       });
       await refreshList();
     } catch (error) {
-      // TODO: do better
-      console.log(error);
+      toast();
     }
   };
 
@@ -113,8 +114,7 @@ const SessionCard = ({
       await customFetch.delete(`/api/bookings/${booking.id}`);
       await refreshList();
     } catch (error) {
-      // TODO: do better
-      console.log(error);
+      toast();
     }
   };
 
