@@ -104,6 +104,31 @@ const ConfirmActionModal = ({
   );
 };
 
+const BookButton = ({ session, booking, onOpen }) => {
+  const isPassed = new Date(session.start_at) < new Date();
+
+  let button = !!booking ? (
+    <Button
+      colorScheme="sunset"
+      px={5}
+      onClick={onOpen}
+      isDisabled={booking.status === "canceled" || isPassed}
+    >
+      Cancel booking
+    </Button>
+  ) : (
+    <Button colorScheme="emerald" px={5} onClick={onOpen} isDisabled={isPassed}>
+      Book Now!
+    </Button>
+  );
+
+  if (isPassed) {
+    button = <Tooltip label="This session is passed">{button}</Tooltip>;
+  }
+
+  return button;
+};
+
 const SessionCard = ({
   session,
   booking,
@@ -154,21 +179,7 @@ const SessionCard = ({
         </Center>
         <Spacer />
         <BookingStateBadge booking={booking} />
-
-        {!!booking ? (
-          <Button
-            colorScheme="sunset"
-            px={5}
-            onClick={onOpen}
-            isDisabled={booking.status === "canceled"}
-          >
-            Cancel booking
-          </Button>
-        ) : (
-          <Button colorScheme="emerald" px={5} onClick={onOpen}>
-            Book Now!
-          </Button>
-        )}
+        <BookButton session={session} booking={booking} onOpen={onOpen} />
       </Flex>
       <ConfirmActionModal
         onClose={onClose}
