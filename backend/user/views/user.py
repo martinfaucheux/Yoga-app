@@ -1,7 +1,12 @@
 from django.db import transaction
 from django.utils import timezone
 from rest_framework.decorators import action
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.mixins import (
+    CreateModelMixin,
+    ListModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+)
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
@@ -18,13 +23,19 @@ from utils import log
 
 
 class UserViewSet(
-    CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet
+    CreateModelMixin,
+    RetrieveModelMixin,
+    ListModelMixin,
+    UpdateModelMixin,
+    GenericViewSet,
 ):
     permission_classes = [AllowAny]
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        return User.objects.filter(id=self.request.user.id)
+        user = self.request.user
+        filter_args = {} if user.is_teacher else {"id": user.id}
+        return User.objects.filter(**filter_args)
 
     @action(
         detail=False,

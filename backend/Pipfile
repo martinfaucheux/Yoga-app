@@ -13,6 +13,7 @@ psycopg2-binary = "*"
 django-cockroachdb = "*"
 gunicorn = "*"
 whitenoise = "*"
+django-filter = "*"
 
 [dev-packages]
 django-extensions = "*"

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
+    "django_filters",
     # custom apps
     "yoga",
     "user",
@@ -127,6 +128,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
         "user.permissions.IsVerified",
     ),
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
 }
 
 SIMPLE_JWT = {
