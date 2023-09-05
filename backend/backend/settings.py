@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "django_filters",
+    "dynamic_preferences",
+    "dynamic_preferences.users.apps.UserPreferencesConfig",
     # custom apps
     "yoga",
     "user",
@@ -196,3 +198,7 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # CUSTOM
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
+
+DYNAMIC_PREFERENCES = {
+    "REGISTRY_MODULE": "preferences",
+}

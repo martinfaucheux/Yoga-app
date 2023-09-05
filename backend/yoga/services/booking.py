@@ -7,6 +7,9 @@ from yoga.models import Booking
 
 def send_status_change_email(booking: Booking):
     user = booking.user
+    if not user.preferences["notification__status_change"]:
+        return
+
     context = (
         {
             "first_name": user.first_name,

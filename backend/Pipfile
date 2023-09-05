@@ -14,6 +14,7 @@ django-cockroachdb = "*"
 gunicorn = "*"
 whitenoise = "*"
 django-filter = "*"
+django-dynamic-preferences = "*"
 
 [dev-packages]
 django-extensions = "*"
