@@ -10,7 +10,6 @@ const isTokenExpired = (response) => {
 };
 
 export const customFetch = axios.create({
-  // baseURL: "http://localhost:3000/api/",
   headers: {
     "Content-type": "application/json",
   },
@@ -39,12 +38,7 @@ customFetch.interceptors.response.use(
     if (isTokenExpired(error.response) && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const resp = await AuthService.refreshToken();
-      // const accessToken = resp.response.access;
-
-      // customFetch.defaults.headers.common[
-      //   "Authorization"
-      // ] = `Bearer ${accessToken}`;
+      await AuthService.refreshToken();
       return customFetch(originalRequest);
     }
     return Promise.reject(error);

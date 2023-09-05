@@ -72,6 +72,11 @@ const CornerMenu = () => {
         <Avatar size={"md"} name={userName} bg="white" color="black" />
       </MenuButton>
       <MenuList>
+        {userData?.is_teacher ? (
+          <MenuItem onClick={() => navigate("/teacher-bookings")}>
+            All bookings
+          </MenuItem>
+        ) : null}
         <MenuItem onClick={() => navigate("/bookings")}>My bookings</MenuItem>
         <MenuDivider />
         {isAuthenticated ? (

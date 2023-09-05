@@ -34,7 +34,9 @@ class UserViewSet(
 
     def get_queryset(self):
         user = self.request.user
-        filter_args = {} if user.is_teacher else {"id": user.id}
+        filter_args = (
+            {"id": user.id} if self.action == "me" or not user.is_teacher else {}
+        )
         return User.objects.filter(**filter_args)
 
     @action(

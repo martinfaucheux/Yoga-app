@@ -14,6 +14,7 @@ import { useAuth } from "./utils/AuthService";
 import { Fonts } from "./utils/Fonts";
 import CalendarView from "./components/Calendar";
 import BookingList from "./components/BookingList";
+import TeacherBookingList from "./components/TeacherBookingList";
 import {
   BrowserRouter as Router,
   Routes,
@@ -75,7 +76,8 @@ function App() {
 }
 
 const MainContent = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userData } = useAuth();
+  const isTeacher = userData?.is_teacher === true;
 
   return (
     <Routes>
@@ -111,6 +113,13 @@ const MainContent = () => {
       </Route>
       <Route exact path="/bookings" element={<PrivateRoute />}>
         <Route path="/bookings" element={<BookingList />} />
+      </Route>
+      <Route exact path="/teacher-bookings" element={<PrivateRoute />}>
+        <Route
+          path="/teacher-bookings"
+          element={<TeacherBookingList />}
+          // element={isTeacher ? <TeacherBookingList /> : <BookingList />}
+        />
       </Route>
 
       <Route path="/blog" element={<BlogPage />} />

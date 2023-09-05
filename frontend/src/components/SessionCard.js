@@ -104,20 +104,25 @@ const ConfirmActionModal = ({
   );
 };
 
-const BookButton = ({ session, booking, onOpen }) => {
+const BookButton = ({ session, booking, onClick }) => {
   const isPassed = new Date(session.start_at) < new Date();
 
   let button = !!booking ? (
     <Button
       colorScheme="sunset"
       px={5}
-      onClick={onOpen}
+      onClick={onClick}
       isDisabled={booking.status === "canceled" || isPassed}
     >
       Cancel booking
     </Button>
   ) : (
-    <Button colorScheme="emerald" px={5} onClick={onOpen} isDisabled={isPassed}>
+    <Button
+      colorScheme="emerald"
+      px={5}
+      onClick={onClick}
+      isDisabled={isPassed}
+    >
       Book Now!
     </Button>
   );
@@ -129,11 +134,38 @@ const BookButton = ({ session, booking, onOpen }) => {
   return button;
 };
 
+const TeacherButton = ({ booking, updateStatus }) => {
+  if (booking.status === "confirmed") {
+    return (
+      <Button
+        colorScheme="sunset"
+        px={5}
+        onClick={() => updateStatus("canceled")}
+      >
+        Deny
+      </Button>
+    );
+  } else if (booking.status === "canceled") {
+    return (
+      <Button
+        colorScheme="emerald"
+        px={5}
+        onClick={() => updateStatus("confirmed")}
+      >
+        Confirm
+      </Button>
+    );
+  }
+  return null;
+};
+
 const SessionCard = ({
   session,
   booking,
   refreshList,
+  user = null,
   showBookText = false,
+  buttonType = "book",
   formatDate = defaultTimeformat,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -160,6 +192,17 @@ const SessionCard = ({
     }
   };
 
+  const updateStatus = async (status) => {
+    try {
+      await customFetch.post(`/api/bookings/${booking.id}/update_status/`, {
+        status,
+      });
+      await refreshList();
+    } catch (error) {
+      toast();
+    }
+  };
+
   return (
     <Box
       borderRadius={"xl"}
@@ -175,11 +218,22 @@ const SessionCard = ({
             {showBookText && !!booking ? (
               <Text color="gray.400">Already booked</Text>
             ) : null}
+            {!!user ? (
+              <Text ml="10">{`${user.first_name} ${user.last_name}`}</Text>
+            ) : null}
           </HStack>
         </Center>
         <Spacer />
         <BookingStateBadge booking={booking} />
-        <BookButton session={session} booking={booking} onOpen={onOpen} />
+        {(
+          buttonType === "book" ? (
+            <BookButton session={session} booking={booking} onClick={onOpen} />
+          ) : (
+            buttonType === "teacher"
+          )
+        ) ? (
+          <TeacherButton booking={booking} updateStatus={updateStatus} />
+        ) : null}
       </Flex>
       <ConfirmActionModal
         onClose={onClose}

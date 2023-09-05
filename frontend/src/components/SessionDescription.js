@@ -4,7 +4,6 @@ const JustifiedText = (props) => <Text textAlign="justify" {...props} />;
 const SmallHeading = (props) => <Heading ml={1} size="md" {...props} />;
 
 const fromMarkdown = (content) => {
-  console.log(content);
   content.split("\n").map((line, index) => {
     if (line.trim() === "") {
       return null;
