@@ -15,6 +15,7 @@ gunicorn = "*"
 whitenoise = "*"
 django-filter = "*"
 django-dynamic-preferences = "*"
+sentry-sdk = {extras = ["django"], version = "*"}
 
 [dev-packages]
 django-extensions = "*"
